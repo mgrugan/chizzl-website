@@ -3,12 +3,11 @@ import type { CSSProperties } from 'react';
 export interface PhoneMockupProps {
   src: string;
   alt: string;
-  /** Rendered width in px. Everything else derives from it. */
-  width?: number;
+  /** Rendered width. A number is px; a string may be any CSS length,
+      e.g. 'min(30vw, 148px)' for responsive sizing. */
+  width?: number | string;
   /** 2D rotation only. The brand book rules out perspective and 3D transforms. */
   rotate?: number;
-  /** Animate the rail wash. Reserve for hero devices; secondary cards stay static. */
-  live?: boolean;
   float?: 'slow' | 'slower' | false;
   priority?: boolean;
   className?: string;
@@ -20,20 +19,17 @@ export function PhoneMockup({
   alt,
   width = 280,
   rotate = 0,
-  live = false,
   float = false,
   priority = false,
   className = '',
   style,
 }: PhoneMockupProps) {
   const floatClass = float === 'slow' ? 'float-slow' : float === 'slower' ? 'float-slower' : '';
+  const pw = typeof width === 'number' ? `${width}px` : width;
 
   return (
     <div className={floatClass} style={{ rotate: `${rotate}deg` }}>
-      <div
-        className={`device ${live ? 'device--live' : ''} ${className}`}
-        style={{ ['--pw' as string]: `${width}px`, ...style }}
-      >
+      <div className={`device ${className}`} style={{ ['--pw' as string]: pw, ...style }}>
         <div className="device__body">
           <span className="device__rim" aria-hidden="true" />
           <span className="device__btn device__btn--l device__btn--action" aria-hidden="true" />

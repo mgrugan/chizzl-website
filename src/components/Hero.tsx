@@ -1,12 +1,12 @@
 import { motion, useReducedMotion } from 'motion/react';
 import { AppStoreBadge } from './AppStoreBadge';
 import { PhoneMockup } from './PhoneMockup';
-import { SCREENS } from '../config';
+import { SCREENS, asset } from '../config';
 
 /**
- * Minimal centred hero: name, one line, one CTA, and the fanned device
- * cluster as the visual. Sized to land inside the first viewport on both
- * desktop and mobile.
+ * Minimal centred hero: app icon and store badge side by side, one line,
+ * then the fanned device cluster. The fan shows on every width; the side
+ * phones size down with the viewport so the trio fits a phone screen.
  */
 export function Hero() {
   const reduce = useReducedMotion();
@@ -18,6 +18,7 @@ export function Hero() {
 
   return (
     <section id="top" className="relative overflow-hidden pt-9 pb-10 lg:pt-12 lg:pb-12">
+      <h1 className="sr-only">CHIZZL AI</h1>
       <div
         aria-hidden="true"
         className="pointer-events-none absolute -top-1/4 left-1/2 aspect-square w-[min(880px,160vw)] -translate-x-1/2 rounded-full"
@@ -25,36 +26,38 @@ export function Hero() {
       />
 
       <div className="relative mx-auto flex max-w-[1400px] flex-col items-center px-5 text-center lg:px-8">
-        <motion.h1
-          {...enter(0)}
-          className="font-display text-[clamp(30px,6vw,44px)] font-semibold leading-none tracking-[-0.02em] text-ink"
-        >
-          CHIZZL <span className="brand-gradient-text">AI</span>
-        </motion.h1>
+        <motion.div {...enter(0)} className="flex items-center gap-4">
+          <img
+            src={asset('img/logo-tile.png')}
+            alt="CHIZZL AI app icon"
+            width={512}
+            height={512}
+            className="h-14 w-14 rounded-[14px] lg:h-16 lg:w-16 lg:rounded-2xl"
+            fetchPriority="high"
+            decoding="async"
+          />
+          <AppStoreBadge />
+        </motion.div>
 
         <motion.p
-          {...enter(0.08)}
-          className="mt-3 max-w-[42ch] text-[15px] leading-relaxed text-ink-dim lg:text-[16px]"
+          {...enter(0.1)}
+          className="mt-5 max-w-[42ch] text-[15px] leading-relaxed text-ink-dim lg:text-[16px]"
         >
           Scan your physique, get an honest body fat estimate, and train a plan that adapts.
         </motion.p>
-
-        <motion.div {...enter(0.16)} className="mt-6">
-          <AppStoreBadge />
-        </motion.div>
 
         {/* The fan */}
         <motion.div
           initial={reduce ? false : { opacity: 0, scale: 0.97 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-9 flex items-end justify-center lg:mt-11"
+          transition={{ duration: 0.9, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-8 flex items-end justify-center lg:mt-10"
         >
-          <div className="hidden -mr-9 opacity-75 sm:block">
+          <div className="-mr-6 opacity-75 sm:-mr-9">
             <PhoneMockup
               src={SCREENS.analytics}
               alt="Volume tracked over the past week."
-              width={148}
+              width="min(29vw, 148px)"
               rotate={-11}
               float="slower"
             />
@@ -63,17 +66,16 @@ export function Hero() {
             <PhoneMockup
               src={SCREENS.scan}
               alt="Body Scan turning three progress photos into a physique score of 83 out of 100 with a body fat estimate."
-              width={212}
+              width="min(50vw, 212px)"
               rotate={0}
-              live
               priority
             />
           </div>
-          <div className="hidden -ml-9 opacity-75 sm:block">
+          <div className="-ml-6 opacity-75 sm:-ml-9">
             <PhoneMockup
               src={SCREENS.muscles}
               alt="Muscle map highlighting the groups trained this week."
-              width={148}
+              width="min(29vw, 148px)"
               rotate={11}
               float="slow"
             />

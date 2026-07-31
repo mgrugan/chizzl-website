@@ -3,8 +3,9 @@ import { PhoneMockup } from './PhoneMockup';
 import { SCREENS } from '../config';
 
 /**
- * Asymmetric flow rather than three equal cards: the first step carries the
- * device, the rest step down in weight, so the eye reads an order.
+ * Steps left, device right, both boxed. The device sits in the same
+ * rounded gradient cell the bento uses, so the two sections read as one
+ * system.
  */
 export function HowItWorks() {
   return (
@@ -15,17 +16,7 @@ export function HowItWorks() {
         </h2>
       </Reveal>
 
-      <div className="mt-7 grid gap-7 lg:grid-cols-[0.85fr_1.15fr] lg:items-center lg:gap-12">
-        <Reveal className="hidden lg:flex lg:justify-start">
-          <PhoneMockup
-            src={SCREENS.home}
-            alt="Dashboard showing a physique score of 76, a body fat estimate, and the day's workout."
-            width={196}
-            rotate={-4}
-            float="slow"
-          />
-        </Reveal>
-
+      <div className="mt-7 grid gap-3 lg:grid-cols-[1.15fr_0.85fr] lg:items-stretch">
         <div className="grid gap-px overflow-hidden rounded-card border border-hairline bg-hairline">
           {[
             { t: 'Take the scan', d: 'Front, side and back. The app walks you through framing so the comparison holds up month to month.' },
@@ -33,13 +24,28 @@ export function HowItWorks() {
             { t: 'Train the plan', d: 'Sessions adjust to the volume you actually logged, not the volume you meant to hit.' },
           ].map((step, i) => (
             <Reveal key={step.t} delay={i * 0.08}>
-              <div className="bg-card p-5 lg:p-7">
+              <div className="h-full bg-card p-5 lg:p-7">
                 <h3 className="font-display text-[19px] font-semibold text-ink">{step.t}</h3>
                 <p className="mt-1.5 max-w-[52ch] text-[14.5px] leading-relaxed text-ink-dim">{step.d}</p>
               </div>
             </Reveal>
           ))}
         </div>
+
+        <Reveal className="hidden lg:block">
+          <div
+            className="flex h-full items-center justify-center overflow-hidden rounded-card border border-hairline p-6"
+            style={{ background: 'linear-gradient(160deg, #17181B 0%, #0E0F11 55%, #000 100%)' }}
+          >
+            <PhoneMockup
+              src={SCREENS.home}
+              alt="Dashboard showing a physique score of 76, a body fat estimate, and the day's workout."
+              width={188}
+              rotate={4}
+              float="slow"
+            />
+          </div>
+        </Reveal>
       </div>
     </section>
   );

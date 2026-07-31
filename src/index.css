@@ -155,34 +155,15 @@
     0 0 80px -28px rgba(39,224,138,.22);
 }
 
-/* The rail. An oversized linear gradient rotates beneath a clipped rim,
-   12s linear loop. The four disperse stops are the green band that makes
-   the chrome read as chrome-with-green rather than grey. */
+/* The rail. Solid white per the brand direction: the frame reads as a
+   clean silver-white case rather than animated chrome. */
 .device__rim {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  overflow: hidden;
+  background: #F5F5F7;
   z-index: 0;
 }
-.device__rim::before {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 280%;
-  aspect-ratio: 1;
-  translate: -50% -50%;
-  background: linear-gradient(90deg,
-    #F2F4F8 0%, #A9B1C0 9%, #4A4E59 18%,
-    #8FDE6F 27%, #E9FBD9 33%, #7CE8B4 38%, #3BB98A 44%,
-    #343741 55%, #E9ECF2 66%, #A9B1C0 76%, #4A4E59 86%, #F2F4F8 100%);
-  opacity: .92;
-}
-@media (prefers-reduced-motion: no-preference) {
-  .device--live .device__rim::before { animation: metal-wash 12s linear infinite; }
-}
-@keyframes metal-wash { from { rotate: 0deg } to { rotate: 360deg } }
 
 .device__bezel {
   position: relative;
