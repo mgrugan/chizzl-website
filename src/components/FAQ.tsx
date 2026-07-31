@@ -9,27 +9,27 @@ import { Reveal } from './Reveal';
  */
 const ITEMS = [
   {
-    q: 'What is free and what needs Pro?',
+    q: 'Free vs Pro?',
     a: "Free covers the whole loop: a monthly physique scan, the generated plan or your own saved workouts, all 325+ exercises, volume charts, muscle maps, history, streaks, records, achievements, and meal plans with macros and a grocery list. Pro adds the AI Coach, Progress Prediction, cardio tracking with a stopwatch and interval timer, and moves scans from monthly to weekly.",
   },
   {
-    q: 'How accurate is the body fat estimate?',
+    q: 'How accurate is it?',
     a: 'It is a photo-based estimate and the app says so on the scan itself. Treat it as a trend line you compare month to month, not a clinical measurement. For a clinical number you want a DEXA scan.',
   },
   {
-    q: 'Do I have to use the plan it builds?',
+    q: 'Must I use the plan?',
     a: 'No. The generated split is built from your scan plus your age, weight, goal, experience, the days and time you can train, injuries and available equipment. You can ignore all of it and create, name and save your own workouts to reuse instead.',
   },
   {
-    q: 'What can it actually track?',
+    q: 'What can it track?',
     a: '325+ exercises across barbell, dumbbell, cable, machine, Smith, specialty bar and conditioning work, with separate left and right weights on single-arm and single-leg movements. Search finds an exercise by name, muscle or category, and a set in progress survives switching tabs or closing the app mid-workout.',
   },
   {
-    q: 'What does the AI Coach know?',
+    q: 'What does Coach know?',
     a: 'Your training history. Ask it your bench max and it reads your logged sets rather than guessing. Ask it to review your week and it works from the sessions you actually did.',
   },
   {
-    q: 'Is there an Android version?',
+    q: 'Is there Android?',
     a: 'Not yet. iPhone comes first and Android is being evaluated after launch.',
   },
 ];
@@ -41,8 +41,8 @@ export function FAQ() {
     <section id="faq" className="border-t border-hairline">
       <div className="mx-auto max-w-[900px] px-5 py-11 lg:px-8 lg:py-14">
         <Reveal>
-          <h2 className="font-display text-[clamp(26px,3.6vw,38px)] font-extralight leading-[1.08] tracking-[-0.02em] text-ink">
-            Questions worth answering.
+          <h2 className="font-display text-[clamp(24px,3.2vw,36px)] font-extralight leading-[1.08] tracking-[-0.02em] text-ink">
+            Common questions.
           </h2>
         </Reveal>
 
@@ -60,7 +60,7 @@ export function FAQ() {
                     onClick={() => setOpen(expanded ? null : i)}
                     className="flex w-full items-center justify-between gap-6 py-5 text-left"
                   >
-                    <span className="font-display text-[16px] font-light text-ink lg:text-[17px]">
+                    <span className="font-display text-[19px] font-light text-ink">
                       {item.q}
                     </span>
                     <PlusIcon

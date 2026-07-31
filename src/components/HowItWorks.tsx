@@ -11,8 +11,8 @@ export function HowItWorks() {
   return (
     <section id="how" className="mx-auto max-w-[1400px] px-5 py-11 lg:px-8 lg:py-14">
       <Reveal>
-        <h2 className="max-w-[16ch] font-display text-[clamp(26px,3.6vw,40px)] font-extralight leading-[1.08] tracking-[-0.02em] text-ink">
-          Scan. Get a plan. Log the work.
+        <h2 className="font-display text-[clamp(24px,3.2vw,36px)] font-extralight leading-[1.08] tracking-[-0.02em] text-ink">
+          Scan. Plan. Log.
         </h2>
       </Reveal>
 

@@ -18,8 +18,8 @@ export function PlanBento() {
   return (
     <section className="mx-auto max-w-[1400px] px-5 py-11 lg:px-8 lg:py-14">
       <Reveal>
-        <h2 className="max-w-[20ch] font-display text-[clamp(26px,3.6vw,40px)] font-extralight leading-[1.08] tracking-[-0.02em] text-ink">
-          Then it shows you whether it worked.
+        <h2 className="font-display text-[clamp(24px,3.2vw,36px)] font-extralight leading-[1.08] tracking-[-0.02em] text-ink">
+          See what worked.
         </h2>
       </Reveal>
 
@@ -43,7 +43,7 @@ export function PlanBento() {
           <div className="flex h-full flex-col justify-between gap-5 rounded-card border border-hairline bg-card p-5 lg:p-7">
             <img src={asset('img/icons/muscle-map.png')} alt="" width={96} height={96} className="h-8 w-8" loading="lazy" />
             <div>
-              <h3 className="font-display text-[20px] font-light text-ink">Muscle maps that match what you lifted</h3>
+              <h3 className="font-display text-[19px] font-light text-ink">Muscle maps</h3>
               <p className="mt-2 max-w-[58ch] text-[14.5px] leading-relaxed text-ink-dim">
                 A rotatable 3D body plus front and back maps, lighting up in proportion to the
                 volume each muscle has actually taken. Alongside weekly volume charts, most and
