@@ -35,6 +35,18 @@ jobs:
         with:
           enablement: true
 
+      # GitHub Pages serves every file with cache-control: max-age=600 and
+      # that cannot be configured. Without a version on the asset URLs a
+      # returning visitor can load new HTML against a still-cached old
+      # stylesheet and get a broken hybrid page. Stamping the commit SHA
+      # means the HTML and the CSS/JS it depends on always update together.
+      - name: Stamp asset versions
+        run: |
+          V="${GITHUB_SHA::8}"
+          sed -i "s/?v=dev/?v=$V/g" index.html
+          echo "Stamped assets with $V:"
+          grep -o 'assets/[^"]*?v=[^"]*' index.html
+
       - name: Upload site
         uses: actions/upload-pages-artifact@v3
         with:

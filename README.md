@@ -64,6 +64,21 @@ a file at the same aspect ratio.
 `analytics.jpg` and `muscles.jpg` are not currently referenced — they are kept
 so screens can be swapped without re-exporting.
 
+## Cache busting
+
+GitHub Pages serves every file with `cache-control: max-age=600`, and that
+header cannot be configured. Without versioned asset URLs a returning visitor
+can load fresh HTML against a still-cached stylesheet and get a broken hybrid
+page — new markup, old layout rules.
+
+So `index.html` references its CSS and JS as `?v=dev`, and the Pages workflow
+rewrites that to the commit SHA before uploading. The HTML and the assets it
+depends on therefore always change together.
+
+Keep the `?v=dev` suffix on any stylesheet or script added to `index.html`; the
+workflow stamps whatever it finds. Locally `?v=dev` is just an ignored query
+string, so nothing special is needed to develop.
+
 ## Notes
 
 **Design tokens** in `:root` come from the project's "Obsidian Kinetic" design
