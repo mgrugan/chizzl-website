@@ -33,7 +33,7 @@ export function FAQ() {
     <section id="faq" className="border-t border-hairline">
       <div className="mx-auto max-w-[900px] px-5 py-11 lg:px-8 lg:py-14">
         <Reveal>
-          <h2 className="font-display text-[clamp(26px,3.6vw,38px)] font-semibold leading-[1.08] tracking-[-0.02em] text-ink">
+          <h2 className="font-display text-[clamp(26px,3.6vw,38px)] font-extralight leading-[1.08] tracking-[-0.02em] text-ink">
             Questions worth answering.
           </h2>
         </Reveal>
@@ -52,7 +52,7 @@ export function FAQ() {
                     onClick={() => setOpen(expanded ? null : i)}
                     className="flex w-full items-center justify-between gap-6 py-5 text-left"
                   >
-                    <span className="font-display text-[16px] font-semibold text-ink lg:text-[17px]">
+                    <span className="font-display text-[16px] font-light text-ink lg:text-[17px]">
                       {item.q}
                     </span>
                     <PlusIcon

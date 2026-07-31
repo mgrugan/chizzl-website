@@ -12,7 +12,7 @@ export function FinalCTA() {
       />
       <Reveal className="relative mx-auto flex max-w-[1400px] flex-col items-center px-5 text-center lg:px-8">
         <img src={asset('img/logo-mark.png')} alt="" width={495} height={720} loading="lazy" className="h-14 w-auto" />
-        <h2 className="mt-6 max-w-[16ch] font-display text-[clamp(26px,3.8vw,42px)] font-semibold leading-[1.08] tracking-[-0.02em] text-balance text-ink">
+        <h2 className="mt-6 max-w-[16ch] font-display text-[clamp(26px,3.8vw,42px)] font-extralight leading-[1.08] tracking-[-0.02em] text-balance text-ink">
           Stop guessing. Start measuring.
         </h2>
         <div className="mt-7">

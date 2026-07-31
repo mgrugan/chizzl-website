@@ -11,7 +11,7 @@ export function PlanBento() {
   return (
     <section className="mx-auto max-w-[1400px] px-5 py-11 lg:px-8 lg:py-14">
       <Reveal>
-        <h2 className="max-w-[20ch] font-display text-[clamp(26px,3.6vw,40px)] font-semibold leading-[1.08] tracking-[-0.02em] text-ink">
+        <h2 className="max-w-[20ch] font-display text-[clamp(26px,3.6vw,40px)] font-extralight leading-[1.08] tracking-[-0.02em] text-ink">
           A plan that answers to your logbook.
         </h2>
       </Reveal>
@@ -37,7 +37,7 @@ export function PlanBento() {
           <div className="flex h-full flex-col justify-between gap-6 rounded-card border border-hairline bg-card p-5 lg:p-7">
             <TrendUpIcon size={26} weight="light" className="text-brand" />
             <div>
-              <h3 className="font-display text-[20px] font-semibold text-ink">It reads the sessions you logged</h3>
+              <h3 className="font-display text-[20px] font-light text-ink">It reads the sessions you logged</h3>
               <p className="mt-2 max-w-[56ch] text-[15px] leading-relaxed text-ink-dim">
                 Targets move with your actual volume. Miss a week and the plan meets you
                 where you are instead of pretending the week happened.
@@ -53,7 +53,7 @@ export function PlanBento() {
           >
             <BarbellIcon size={26} weight="light" className="text-lime" />
             <div>
-              <h3 className="font-display text-[19px] font-semibold text-ink">Balance you can see</h3>
+              <h3 className="font-display text-[19px] font-light text-ink">Balance you can see</h3>
               <p className="mt-2 text-[14.5px] leading-relaxed text-ink-dim">
                 Brighter means more volume. Neglected groups stop hiding.
               </p>
@@ -65,7 +65,7 @@ export function PlanBento() {
           <div className="flex h-full flex-col justify-between gap-6 rounded-card border border-hairline bg-inset p-5 lg:p-6">
             <FlameIcon size={26} weight="light" className="text-brand" />
             <div>
-              <h3 className="font-display text-[19px] font-semibold text-ink">Nutrition alongside</h3>
+              <h3 className="font-display text-[19px] font-light text-ink">Nutrition alongside</h3>
               <p className="mt-2 text-[14.5px] leading-relaxed text-ink-dim">
                 Calories tracked next to the lift, so the surplus is a decision and not an accident.
               </p>

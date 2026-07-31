@@ -61,39 +61,39 @@ colors:
 
 typography:
   wordmark:
-    fontFamily: Space Grotesk
+    fontFamily: Inter
     fontSize: 18px
-    fontWeight: 700
+    fontWeight: 300
     lineHeight: 1
     letterSpacing: 4px
   display-xl:
-    fontFamily: Space Grotesk
+    fontFamily: Inter
     fontSize: 64px
-    fontWeight: 700
+    fontWeight: 200
     lineHeight: 1.02
     letterSpacing: -0.03em
   display-lg:
-    fontFamily: Space Grotesk
+    fontFamily: Inter
     fontSize: 48px
-    fontWeight: 700
+    fontWeight: 200
     lineHeight: 1.05
     letterSpacing: -0.02em
   headline-lg:
-    fontFamily: Space Grotesk
+    fontFamily: Inter
     fontSize: 32px
-    fontWeight: 600
+    fontWeight: 200
     lineHeight: 1.15
     letterSpacing: -0.02em
   headline-md:
-    fontFamily: Space Grotesk
+    fontFamily: Inter
     fontSize: 24px
-    fontWeight: 600
+    fontWeight: 300
     lineHeight: 1.25
     letterSpacing: -0.01em
   title:
-    fontFamily: Space Grotesk
+    fontFamily: Inter
     fontSize: 19px
-    fontWeight: 600
+    fontWeight: 300
     lineHeight: 1.3
   body-lg:
     fontFamily: Manrope
@@ -111,9 +111,9 @@ typography:
     fontWeight: 400
     lineHeight: 1.55
   label:
-    fontFamily: Space Grotesk
+    fontFamily: Inter
     fontSize: 12px
-    fontWeight: 500
+    fontWeight: 400
     lineHeight: 1.35
     letterSpacing: 1.5px
   caption:
@@ -122,15 +122,15 @@ typography:
     fontWeight: 400
     lineHeight: 1.45
   numeral-xl:
-    fontFamily: Space Grotesk
+    fontFamily: Inter
     fontSize: 56px
-    fontWeight: 700
+    fontWeight: 200
     lineHeight: 1
     letterSpacing: -0.03em
   numeral-lg:
-    fontFamily: Space Grotesk
+    fontFamily: Inter
     fontSize: 36px
-    fontWeight: 600
+    fontWeight: 300
     lineHeight: 1.05
     letterSpacing: -0.02em
 
@@ -360,19 +360,27 @@ provisional and should be confirmed before they ship anywhere user-facing.
 
 ## Typography
 
-Two families, no exceptions. **Space Grotesk** carries display, headings,
-labels and all numerals — its geometry reads technical. **Manrope** carries
-body and UI copy, where legibility matters more than character.
+Two families, no exceptions. **Inter** carries display, headings, labels and
+all numerals, set deliberately light: 200 at display sizes, 300 for smaller
+headings. The thinness is the premium signal, so weight is never added back
+just to fill space. **Manrope** carries body and UI copy, where legibility
+matters more than character.
 
-- **Wordmark** — `C H I Z Z L`, Space Grotesk, all-caps, 4px tracking. It
-  should feel chiselled, like an inscription.
+Inter ships as a single variable file per subset covering 100 to 600, so the
+whole display range costs one request.
+
+- **Wordmark** — `C H I Z Z L`, Inter Light, all-caps, 4px tracking. Airy
+  rather than chiselled.
 - **Section labels** — uppercase, 1–4px tracking, caption size, `text-faint`.
 - **Numerals** — always the display font, with tight negative tracking at large
   sizes. Weights, reps, percentages and scores are the most important elements
   on any screen and should be set as such.
 
-Do not introduce a third family, and do not fall back to Inter, Roboto, Arial
-or system-ui for display text.
+Do not introduce a third family. Inter is the display face by brand decision;
+do not fall back to Roboto, Arial or system-ui.
+
+Weights below 300 are reserved for type at 24px and above. Light-on-dark thins
+out perceptually, so anything smaller holds 300 or more.
 
 ## Layout & Spacing
 
@@ -448,7 +456,8 @@ over 0.65s ease-in-out each way, cross-fading to real content over 220ms.
 - Don't use drop shadows for elevation.
 - Don't tint the background green — the structure reads black-and-white.
 - Don't use pure white text or pure white fills.
-- Don't use Inter, Roboto, Arial or system-ui for display type.
+- Don't use Roboto, Arial or system-ui for display type.
+- Don't set display type heavier than 300, or body type lighter than 400.
 - Don't use purple, or any gradient outside the brand ramps.
 - Don't use perspective or 3D transforms; they render incorrectly on iOS. Use
   solid fills over gradients inside transformed subtrees.
