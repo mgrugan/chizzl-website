@@ -62,8 +62,9 @@ downscaling, so the Dynamic Island lands in the gap between the status-bar clock
 and the battery icons, exactly as it does on a real device. To swap one, drop in
 a file at the same aspect ratio.
 
-`analytics.jpg` is not currently referenced — it is kept so screens can be
-swapped without re-exporting.
+`analytics.jpg` and `muscles.jpg` are not currently referenced — they are kept
+so screens can be swapped without re-exporting. The hero and feature 01 both
+show `scan.jpg`, since Body Scan leads the page.
 
 ## Notes
 
