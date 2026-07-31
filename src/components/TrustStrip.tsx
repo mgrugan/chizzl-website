@@ -1,24 +1,30 @@
-import { CameraIcon, LockKeyIcon, DeviceMobileIcon } from '@phosphor-icons/react';
 import { Reveal } from './Reveal';
+import { asset } from '../config';
 
 /**
- * Sits under the hero, never inside it. These are facts about the product as
- * it ships, not social proof. Real testimonials and customer logos belong
- * here once the app is live and there are actual users to quote.
+ * Facts about the product as it ships, sitting under the hero. Not social
+ * proof: real testimonials belong here once the app has users to quote.
  */
 const FACTS = [
-  { Icon: DeviceMobileIcon, label: 'iPhone first', detail: 'Built for iOS' },
-  { Icon: CameraIcon, label: 'One scan a month', detail: 'On the free plan' },
-  { Icon: LockKeyIcon, label: 'Your photos, your call', detail: 'Scans stay in your account' },
+  { icon: 'barbell', label: '325+ exercises', detail: 'Barbell to conditioning' },
+  { icon: 'scan', label: 'Monthly scans', detail: 'Weekly on Pro' },
+  { icon: 'meal', label: 'Meal plans', detail: 'Macros and a grocery list' },
 ];
 
 export function TrustStrip() {
   return (
     <section className="border-y border-hairline bg-elevated/60">
-      <Reveal className="mx-auto grid max-w-[1400px] gap-6 px-5 py-5 sm:grid-cols-3 lg:px-8">
-        {FACTS.map(({ Icon, label, detail }) => (
+      <Reveal className="mx-auto grid max-w-[1400px] gap-4 px-5 py-5 sm:grid-cols-3 lg:px-8">
+        {FACTS.map(({ icon, label, detail }) => (
           <div key={label} className="flex items-center gap-3">
-            <Icon size={20} weight="light" className="flex-none text-brand" />
+            <img
+              src={asset(`img/icons/${icon}.png`)}
+              alt=""
+              width={96}
+              height={96}
+              className="h-5 w-5 flex-none opacity-90"
+              loading="lazy"
+            />
             <p className="text-[14.5px] text-ink">
               {label}
               <span className="ml-2 text-ink-faint">{detail}</span>

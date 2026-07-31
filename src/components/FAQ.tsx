@@ -9,16 +9,24 @@ import { Reveal } from './Reveal';
  */
 const ITEMS = [
   {
+    q: 'What is free and what needs Pro?',
+    a: "Free covers the whole loop: a monthly physique scan, the generated plan or your own saved workouts, all 325+ exercises, volume charts, muscle maps, history, streaks, records, achievements, and meal plans with macros and a grocery list. Pro adds the AI Coach, Progress Prediction, cardio tracking with a stopwatch and interval timer, and moves scans from monthly to weekly.",
+  },
+  {
     q: 'How accurate is the body fat estimate?',
-    a: 'It is a photo-based estimate and the app labels it that way in the scan itself. Treat it as a trend line you can compare month to month, not a clinical measurement. For a clinical number you want a DEXA scan.',
+    a: 'It is a photo-based estimate and the app says so on the scan itself. Treat it as a trend line you compare month to month, not a clinical measurement. For a clinical number you want a DEXA scan.',
   },
   {
-    q: 'What do I need for a scan?',
-    a: 'Three photos: front, side and back, in reasonable light. The app frames each one for you so the next scan lines up with the last.',
+    q: 'Do I have to use the plan it builds?',
+    a: 'No. The generated split is built from your scan plus your age, weight, goal, experience, the days and time you can train, injuries and available equipment. You can ignore all of it and create, name and save your own workouts to reuse instead.',
   },
   {
-    q: 'What does the free plan include?',
-    a: 'One scan a month. Pro unlocks weekly scans, which is the cadence that makes the trend line useful during a cut or a bulk.',
+    q: 'What can it actually track?',
+    a: '325+ exercises across barbell, dumbbell, cable, machine, Smith, specialty bar and conditioning work, with separate left and right weights on single-arm and single-leg movements. Search finds an exercise by name, muscle or category, and a set in progress survives switching tabs or closing the app mid-workout.',
+  },
+  {
+    q: 'What does the AI Coach know?',
+    a: 'Your training history. Ask it your bench max and it reads your logged sets rather than guessing. Ask it to review your week and it works from the sessions you actually did.',
   },
   {
     q: 'Is there an Android version?',

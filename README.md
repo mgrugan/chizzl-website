@@ -119,8 +119,13 @@ Fonts: [Space Grotesk](https://fonts.google.com/specimen/Space+Grotesk) and
 [Manrope](https://fonts.google.com/specimen/Manrope), both SIL Open Font
 License 1.1. Self-hosted, so the page makes no third-party requests.
 
-Icons: [Phosphor](https://phosphoricons.com/). The Apple glyph in the App Store
-badge is inline because Apple requires their own mark and layout.
+Icons: the six line icons in `public/assets/img/icons/` were generated as a
+single sheet through Higgs, then sliced, keyed to transparency and normalised
+to one optical size. Generating them in one pass is what keeps the stroke
+weight and construction consistent; six separate generations would not match.
+[Phosphor](https://phosphoricons.com/) still supplies the FAQ chevron. The
+Apple glyph in the App Store badge is inline because Apple requires their own
+mark and layout.
 
 Apple and the Apple logo are trademarks of Apple Inc. The badge must follow
 Apple's [marketing guidelines](https://developer.apple.com/app-store/marketing/guidelines/)

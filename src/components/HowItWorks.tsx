@@ -12,16 +12,16 @@ export function HowItWorks() {
     <section id="how" className="mx-auto max-w-[1400px] px-5 py-11 lg:px-8 lg:py-14">
       <Reveal>
         <h2 className="max-w-[16ch] font-display text-[clamp(26px,3.6vw,40px)] font-extralight leading-[1.08] tracking-[-0.02em] text-ink">
-          Three photos in. A real number out.
+          Scan. Get a plan. Log the work.
         </h2>
       </Reveal>
 
       <div className="mt-7 grid gap-3 lg:grid-cols-[1.15fr_0.85fr] lg:items-stretch">
         <div className="grid gap-px overflow-hidden rounded-card border border-hairline bg-hairline">
           {[
-            { t: 'Take the scan', d: 'Front, side and back. The app walks you through framing so the comparison holds up month to month.' },
-            { t: 'Read the estimate', d: 'A physique score out of 100 and a body fat range, with the reasoning written out in plain language.' },
-            { t: 'Train the plan', d: 'Sessions adjust to the volume you actually logged, not the volume you meant to hit.' },
+            { t: 'Scan', d: 'A front photo, a side, and a back if you want one. Back comes a rating out of 100, an estimated body-fat range, your strong and weak points, posture notes and a goal to aim at.' },
+            { t: 'Get a plan', d: 'A weekly split built from that scan plus your age, weight, experience, the days and time you actually have, any injuries, and the equipment within reach. Or skip it and save your own workouts.' },
+            { t: 'Log the work', d: '325+ exercises, with separate left and right weights on single-arm and single-leg movements. Sets survive switching tabs or closing the app mid-session.' },
           ].map((step, i) => (
             <Reveal key={step.t} delay={i * 0.08}>
               <div className="h-full bg-card p-5 lg:p-7">

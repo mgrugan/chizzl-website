@@ -45,7 +45,7 @@ export function Hero() {
           {...enter(0.1)}
           className="mt-5 max-w-[42ch] text-[15px] leading-relaxed text-ink-dim lg:text-[16px]"
         >
-          Scan your physique, get an honest body fat estimate, and train a plan that adapts.
+          Photos of your body become a training plan. Then it tracks whether the plan is working.
         </motion.p>
 
         {/* The fan */}
