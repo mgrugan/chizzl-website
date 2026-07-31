@@ -9,24 +9,24 @@ import { TrendUpIcon, BarbellIcon, FlameIcon } from '@phosphor-icons/react';
  */
 export function PlanBento() {
   return (
-    <section className="mx-auto max-w-[1400px] px-5 py-14 lg:px-8 lg:py-20">
+    <section className="mx-auto max-w-[1400px] px-5 py-11 lg:px-8 lg:py-14">
       <Reveal>
         <h2 className="max-w-[20ch] font-display text-[clamp(26px,3.6vw,40px)] font-semibold leading-[1.08] tracking-[-0.02em] text-ink">
           A plan that answers to your logbook.
         </h2>
       </Reveal>
 
-      <div className="mt-10 grid gap-3 lg:grid-cols-3 lg:grid-rows-2">
+      <div className="mt-8 grid gap-3 lg:grid-cols-3 lg:grid-rows-2">
         {/* Device cell, spans both rows */}
-        <Reveal className="lg:row-span-2">
+        <Reveal className="hidden lg:block lg:row-span-2">
           <div
-            className="relative flex h-full items-center justify-center overflow-hidden rounded-card border border-hairline p-6"
+            className="relative flex h-full items-center justify-center overflow-hidden rounded-card border border-hairline p-5 lg:p-6"
             style={{ background: 'linear-gradient(160deg, #17181B 0%, #0E0F11 55%, #000 100%)' }}
           >
             <PhoneMockup
               src={SCREENS.coach}
               alt="Coach citing the week's bench sessions and setting the next load."
-              width={196}
+              width={180}
               rotate={-3}
               float="slow"
             />
@@ -34,7 +34,7 @@ export function PlanBento() {
         </Reveal>
 
         <Reveal delay={0.06} className="lg:col-span-2">
-          <div className="flex h-full flex-col justify-between gap-6 rounded-card border border-hairline bg-card p-6 lg:p-7">
+          <div className="flex h-full flex-col justify-between gap-6 rounded-card border border-hairline bg-card p-5 lg:p-7">
             <TrendUpIcon size={26} weight="light" className="text-brand" />
             <div>
               <h3 className="font-display text-[20px] font-semibold text-ink">It reads the sessions you logged</h3>
@@ -48,7 +48,7 @@ export function PlanBento() {
 
         <Reveal delay={0.12}>
           <div
-            className="flex h-full flex-col justify-between gap-6 rounded-card border border-hairline p-6"
+            className="flex h-full flex-col justify-between gap-6 rounded-card border border-hairline p-5 lg:p-6"
             style={{ background: 'linear-gradient(150deg, rgba(39,224,138,.10), rgba(15,181,166,.04) 60%, transparent)' }}
           >
             <BarbellIcon size={26} weight="light" className="text-lime" />
@@ -62,7 +62,7 @@ export function PlanBento() {
         </Reveal>
 
         <Reveal delay={0.18}>
-          <div className="flex h-full flex-col justify-between gap-6 rounded-card border border-hairline bg-inset p-6">
+          <div className="flex h-full flex-col justify-between gap-6 rounded-card border border-hairline bg-inset p-5 lg:p-6">
             <FlameIcon size={26} weight="light" className="text-brand" />
             <div>
               <h3 className="font-display text-[19px] font-semibold text-ink">Nutrition alongside</h3>

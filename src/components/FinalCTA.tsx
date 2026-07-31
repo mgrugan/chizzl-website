@@ -4,7 +4,7 @@ import { asset } from '../config';
 
 export function FinalCTA() {
   return (
-    <section className="relative overflow-hidden border-t border-hairline py-14 lg:py-20">
+    <section className="relative overflow-hidden border-t border-hairline py-11 lg:py-14">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute bottom-[-50%] left-1/2 aspect-square w-[min(760px,150vw)] -translate-x-1/2 rounded-full"

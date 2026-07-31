@@ -31,7 +31,7 @@ export function FAQ() {
 
   return (
     <section id="faq" className="border-t border-hairline">
-      <div className="mx-auto max-w-[900px] px-5 py-14 lg:px-8 lg:py-20">
+      <div className="mx-auto max-w-[900px] px-5 py-11 lg:px-8 lg:py-14">
         <Reveal>
           <h2 className="font-display text-[clamp(26px,3.6vw,38px)] font-semibold leading-[1.08] tracking-[-0.02em] text-ink">
             Questions worth answering.

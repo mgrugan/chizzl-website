@@ -4,97 +4,78 @@ import { PhoneMockup } from './PhoneMockup';
 import { SCREENS } from '../config';
 
 /**
- * Asymmetric split hero: message left, device cluster right.
- * Three phones staggered and rotated in 2D, layered by depth.
+ * Minimal centred hero: name, one line, one CTA, and the fanned device
+ * cluster as the visual. Sized to land inside the first viewport on both
+ * desktop and mobile.
  */
 export function Hero() {
   const reduce = useReducedMotion();
   const enter = (delay: number) => ({
-    initial: reduce ? false : { opacity: 0, y: 28 },
+    initial: reduce ? false : { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.8, delay, ease: [0.16, 1, 0.3, 1] as const },
+    transition: { duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] as const },
   });
 
   return (
-    <section id="top" className="relative overflow-hidden pt-10 pb-12 lg:pt-16 lg:pb-14">
-      {/* Brand bloom. Sits behind everything, never intercepts pointers. */}
+    <section id="top" className="relative overflow-hidden pt-9 pb-10 lg:pt-12 lg:pb-12">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -top-1/3 left-1/2 aspect-square w-[min(900px,160vw)] -translate-x-1/2 rounded-full"
-        style={{ background: 'radial-gradient(circle, rgba(39,224,138,.16) 0%, rgba(39,224,138,0) 68%)' }}
+        className="pointer-events-none absolute -top-1/4 left-1/2 aspect-square w-[min(880px,160vw)] -translate-x-1/2 rounded-full"
+        style={{ background: 'radial-gradient(circle, rgba(39,224,138,.15) 0%, rgba(39,224,138,0) 68%)' }}
       />
 
-      <div className="relative mx-auto grid max-w-[1400px] grid-cols-1 items-center gap-10 px-5 lg:grid-cols-[1.02fr_1fr] lg:gap-8 lg:px-8">
-        {/* Message */}
-        <div className="max-w-xl">
-          <motion.p {...enter(0)} className="eyebrow">
-            Physique tracking
-          </motion.p>
-
-          <motion.h1
-            {...enter(0.08)}
-            className="mt-4 font-display text-[clamp(34px,7.5vw,56px)] font-semibold leading-[1.05] tracking-[-0.03em] text-balance text-ink"
-          >
-            Know exactly where you <span className="brand-gradient-text">stand</span>.
-          </motion.h1>
-
-          <motion.p
-            {...enter(0.16)}
-            className="mt-4 max-w-[44ch] text-[clamp(15px,1.8vw,17px)] leading-relaxed text-ink-dim"
-          >
-            Scan your physique, get an honest body fat estimate, and train against a plan
-            that adapts to what you actually lifted.
-          </motion.p>
-
-          <motion.div {...enter(0.24)} className="mt-7 flex flex-wrap items-center gap-3">
-            <AppStoreBadge />
-            <a
-              href="#how"
-              className="inline-flex h-14 items-center rounded-control border border-hairline-strong px-6 font-display text-[15px] font-semibold text-ink transition hover:border-brand hover:text-brand active:scale-[0.98]"
-            >
-              See how it works
-            </a>
-          </motion.div>
-        </div>
-
-        {/* Device cluster */}
-        <motion.div
-          initial={reduce ? false : { opacity: 0, scale: 0.96 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="relative flex min-h-[400px] items-center justify-center lg:min-h-[540px]"
+      <div className="relative mx-auto flex max-w-[1400px] flex-col items-center px-5 text-center lg:px-8">
+        <motion.h1
+          {...enter(0)}
+          className="font-display text-[clamp(30px,6vw,44px)] font-semibold leading-none tracking-[-0.02em] text-ink"
         >
-          {/* Back left, deepest */}
-          <div className="absolute left-[2%] top-[8%] hidden opacity-70 sm:block lg:left-[-2%]">
+          CHIZZL <span className="brand-gradient-text">AI</span>
+        </motion.h1>
+
+        <motion.p
+          {...enter(0.08)}
+          className="mt-3 max-w-[42ch] text-[15px] leading-relaxed text-ink-dim lg:text-[16px]"
+        >
+          Scan your physique, get an honest body fat estimate, and train a plan that adapts.
+        </motion.p>
+
+        <motion.div {...enter(0.16)} className="mt-6">
+          <AppStoreBadge />
+        </motion.div>
+
+        {/* The fan */}
+        <motion.div
+          initial={reduce ? false : { opacity: 0, scale: 0.97 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-9 flex items-end justify-center lg:mt-11"
+        >
+          <div className="hidden -mr-9 opacity-75 sm:block">
             <PhoneMockup
-              src={SCREENS.muscles}
-              alt="Muscle map highlighting the groups trained this week."
-              width={150}
-              rotate={-9}
+              src={SCREENS.analytics}
+              alt="Volume tracked over the past week."
+              width={148}
+              rotate={-11}
               float="slower"
             />
           </div>
-
-          {/* Back right */}
-          <div className="absolute right-[2%] top-[2%] hidden opacity-80 sm:block lg:right-[-1%]">
-            <PhoneMockup
-              src={SCREENS.coach}
-              alt="Coach reviewing the week and setting the next targets."
-              width={162}
-              rotate={8}
-              float="slow"
-            />
-          </div>
-
-          {/* Front centre, the hero device */}
           <div className="relative z-10">
             <PhoneMockup
               src={SCREENS.scan}
               alt="Body Scan turning three progress photos into a physique score of 83 out of 100 with a body fat estimate."
-              width={240}
-              rotate={-3}
+              width={212}
+              rotate={0}
               live
               priority
+            />
+          </div>
+          <div className="hidden -ml-9 opacity-75 sm:block">
+            <PhoneMockup
+              src={SCREENS.muscles}
+              alt="Muscle map highlighting the groups trained this week."
+              width={148}
+              rotate={11}
+              float="slow"
             />
           </div>
         </motion.div>

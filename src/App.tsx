@@ -2,7 +2,6 @@ import { Nav } from './components/Nav';
 import { Hero } from './components/Hero';
 import { TrustStrip } from './components/TrustStrip';
 import { HowItWorks } from './components/HowItWorks';
-import { ScanShowcase } from './components/ScanShowcase';
 import { PlanBento } from './components/PlanBento';
 import { FAQ } from './components/FAQ';
 import { FinalCTA } from './components/FinalCTA';
@@ -22,7 +21,6 @@ export default function App() {
         <Hero />
         <TrustStrip />
         <HowItWorks />
-        <ScanShowcase />
         <PlanBento />
         <FAQ />
         <FinalCTA />
