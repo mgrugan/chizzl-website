@@ -35,6 +35,7 @@ HTML = ROOT / "index.html"
 ASSETS = [
     "assets/css/fonts.css",
     "assets/css/styles.css",
+    "assets/js/in-app-browser.js",
     "assets/js/main.js",
 ]
 

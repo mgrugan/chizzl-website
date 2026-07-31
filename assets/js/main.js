@@ -30,6 +30,14 @@ const APP_STORE_URL = '';
   });
 
   document.documentElement.classList.add('is-launched');
+
+  // Instagram/Facebook render links in a webview that refuses App Store
+  // links — a tap just does nothing. Inside those apps this intercepts the
+  // badge and hands the URL to the system browser. In every normal browser
+  // bind() attaches nothing, so the badge stays a plain anchor.
+  if (window.InAppBrowser) {
+    window.InAppBrowser.bind('[data-appstore]', { url: url });
+  }
 })();
 
 /* Footer year */
