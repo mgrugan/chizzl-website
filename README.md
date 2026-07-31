@@ -19,7 +19,6 @@ That single change:
 - points every `[data-appstore]` badge at the URL
 - removes the `is-locked` state (restores hover, focus and pointer events)
 - clears the `aria-disabled` / `tabindex="-1"` accessibility lock
-- strips the "Coming soon" pills
 
 No markup edits required. Leaving it as `''` keeps the pre-launch state. Push to
 the default branch and Pages redeploys automatically.
@@ -63,8 +62,7 @@ and the battery icons, exactly as it does on a real device. To swap one, drop in
 a file at the same aspect ratio.
 
 `analytics.jpg` and `muscles.jpg` are not currently referenced — they are kept
-so screens can be swapped without re-exporting. The hero and feature 01 both
-show `scan.jpg`, since Body Scan leads the page.
+so screens can be swapped without re-exporting.
 
 ## Notes
 
@@ -72,11 +70,19 @@ show `scan.jpg`, since Body Scan leads the page.
 system: dark-first surfaces, hairline borders instead of shadows, a 5%
 film-grain overlay, Space Grotesk for display and Manrope for body.
 
-**Responsive** — the hero phone leads, with the mark, wordmark and App Store
-badge stacked beneath it on phones and moving to its right from 900px, where the
-pair is centred as a unit. Below that, one device per feature, stacked on phones
-and alternating left/right from 900px. Verified free of horizontal overflow from
-320px up. Honours `prefers-reduced-motion` and `prefers-contrast`.
+**Steps** — the hero carries step 01 (Body Scan), so it is not repeated below;
+the feature sections pick up at 02.
+
+**Responsive** — the hero is two columns at every width: the phone on the left,
+the mark, wordmark and App Store badge on its right. The phone scales down on
+small screens to keep them side by side, and the badge has a compact variant that
+fits a 137px column at 320px while holding a 44px tap target. Below the hero, one
+full-size device per step, alternating left/right from 900px. Verified free of
+horizontal overflow from 320px up. Honours `prefers-reduced-motion` and
+`prefers-contrast`.
+
+**Spacing** follows the design system's scale — `--unit` 4px, `--gutter` 12px,
+`--stack-sm/md/lg` 8/24/48px, `--pad` 20px — on a strict 8pt grid.
 
 ## Credits
 

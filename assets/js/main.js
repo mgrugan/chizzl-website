@@ -29,12 +29,6 @@ const APP_STORE_URL = '';
     badge.setAttribute('aria-label', 'Download CHIZZL AI on the App Store');
   });
 
-  // Drop the "Coming soon" notes once the link is real
-  document.querySelectorAll('[data-appstore-note]').forEach((note) => {
-    const pill = note.querySelector('.pill');
-    if (pill) pill.remove();
-  });
-
   document.documentElement.classList.add('is-launched');
 })();
 

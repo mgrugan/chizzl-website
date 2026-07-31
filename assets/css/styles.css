@@ -24,7 +24,14 @@
   --font-display:'Space Grotesk',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;
   --font-body:'Manrope',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;
 
-  --pad:20px;
+  /* Spacing scale — Obsidian Kinetic. Strictly 8pt-grid. */
+  --unit:4px;
+  --pad:20px;        /* container-padding — mobile safe zone */
+  --gutter:12px;
+  --stack-sm:8px;
+  --stack-md:24px;
+  --stack-lg:48px;
+
   --wrap:1120px;
 }
 
@@ -76,20 +83,6 @@ a{color:inherit;text-decoration:none}
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-.pill{
-  display:inline-block;
-  font-family:var(--font-display);font-size:11px;font-weight:600;
-  letter-spacing:.1em;text-transform:uppercase;
-  color:#141f00;background:var(--secondary);
-  padding:4px 10px;border-radius:999px;
-}
-
-/* Keeps the pill optically centred whether or not it has text beside it */
-[data-appstore-note]{
-  display:flex;align-items:center;justify-content:center;
-  gap:10px;flex-wrap:wrap;
-}
-
 /* ============================================================
    App Store badge — inert until APP_STORE_URL is set
    ============================================================ */
@@ -126,6 +119,18 @@ a{color:inherit;text-decoration:none}
 .appstore--mini .appstore__glyph{width:19px;height:19px}
 .appstore--mini .appstore__sub{font-size:8.5px;margin-bottom:2px}
 .appstore--mini .appstore__main{font-size:15px}
+
+/* Hero badge shares a row with the phone on small screens, so it has to
+   fit a ~137px column at 320px while keeping a 44px tap target. */
+.appstore--compact{
+  min-height:44px;
+  padding:0 clamp(9px,2.6vw,14px) 0 clamp(8px,2.2vw,12px);
+  gap:clamp(5px,1.6vw,8px);
+  border-radius:9px;
+}
+.appstore--compact .appstore__glyph{width:clamp(15px,4.4vw,21px);height:clamp(15px,4.4vw,21px)}
+.appstore--compact .appstore__sub{font-size:clamp(7px,1.9vw,10px);margin-bottom:2px}
+.appstore--compact .appstore__main{font-size:clamp(12px,3.5vw,17px)}
 
 /* ============================================================
    Header
@@ -164,32 +169,44 @@ a{color:inherit;text-decoration:none}
   background:radial-gradient(circle,rgba(39,224,138,.17) 0%,rgba(39,224,138,0) 68%);
   pointer-events:none;
 }
-/* Phone first, brand + CTA beside it (below it on phones) */
+/* Two columns at every width — brand + CTA sit beside the phone,
+   never under it. The phone shrinks to make room on small screens. */
 .hero__inner{
   position:relative;
   display:grid;
-  justify-items:center;
-  gap:clamp(32px,8vw,48px);
+  grid-template-columns:0.9fr 1fr;
+  align-items:center;
+  column-gap:var(--pad);
+  row-gap:var(--stack-md);
 }
-.hero__device{display:flex;justify-content:center;width:100%}
+.hero__device{
+  display:grid;justify-items:center;
+  gap:var(--stack-md);
+  min-width:0;
+}
 
 .hero__aside{
   display:grid;justify-items:center;text-align:center;
-  gap:20px;
+  gap:16px;                       /* 8pt grid */
+  min-width:0;
 }
 .hero__mark{
   width:auto;
-  height:clamp(104px,24vw,168px);
+  height:clamp(72px,19vw,168px);
   filter:drop-shadow(0 0 42px rgba(39,224,138,.34));
 }
 .hero__title{
-  font-size:clamp(34px,10.5vw,64px);
+  font-family:var(--font-display);font-weight:700;line-height:1.05;
+  font-size:clamp(19px,5.4vw,64px);
   letter-spacing:.05em;
-  display:flex;align-items:baseline;justify-content:center;gap:.24em;
+  display:flex;align-items:baseline;justify-content:center;
+  gap:.24em;flex-wrap:wrap;
 }
 /* Same size as CHIZZL — only the colour differs */
 .hero__ai{color:var(--primary)}
-.hero__note{font-size:13.5px;color:var(--on-surface-variant)}
+
+/* stack-sm on top of the 16px row gap == stack-md below the wordmark */
+.hero__aside .appstore{margin-top:var(--stack-sm)}
 
 /* ============================================================
    iPhone mockup
@@ -198,6 +215,8 @@ a{color:inherit;text-decoration:none}
    ============================================================ */
 .device{
   --pw:clamp(252px,74vw,332px);
+  min-width:0;
+  /* stays inside the hero's narrower left column */
   --band:calc(var(--pw) * .013);   /* polished metal rail  */
   --bez:calc(var(--pw) * .019);    /* black bezel          */
   --rad:calc(var(--pw) * .155);
@@ -298,13 +317,42 @@ a{color:inherit;text-decoration:none}
   right:calc(var(--pw) * -.0072);
   border-radius:0 2px 2px 0;
 }
+.device--hero{--pw:min(37vw,300px)}
+
 .device__btn--action{top:16.5%;height:3.4%}
 .device__btn--vol-up{top:23.2%;height:6.6%}
 .device__btn--vol-dn{top:31.4%;height:6.6%}
 .device__btn--power {top:25.0%;height:10.6%}
 
 /* ============================================================
-   Features — one device per feature
+   Steps
+   ============================================================ */
+.step{
+  display:flex;align-items:center;
+  gap:var(--gutter);
+  text-align:left;
+  min-width:0;
+}
+.step__num{
+  font-family:var(--font-display);
+  font-size:13px;font-weight:600;letter-spacing:.14em;
+  color:var(--primary);
+  border:1px solid var(--hairline-strong);
+  border-radius:999px;
+  padding:5px 11px;
+  flex:none;
+}
+.step h2{
+  font-size:clamp(26px,7.4vw,40px);
+  letter-spacing:-.02em;
+}
+/* Sits under a narrower phone in the hero, so it scales down with it */
+.step--hero{gap:var(--stack-sm)}
+.step--hero .step__num{font-size:10px;padding:4px 8px;letter-spacing:.1em}
+.step--hero h2{font-size:clamp(15px,4.2vw,34px)}
+
+/* ============================================================
+   Features — one device per step
    ============================================================ */
 .features{
   display:grid;
@@ -315,28 +363,10 @@ a{color:inherit;text-decoration:none}
 
 .feature{
   display:grid;justify-items:center;
-  gap:clamp(22px,5vw,30px);
+  gap:var(--stack-md);
   padding-inline:max(var(--pad),env(safe-area-inset-left));
 }
 .feature__device{display:flex;justify-content:center;width:100%}
-
-.feature__label{
-  display:flex;align-items:center;gap:14px;
-  text-align:left;
-}
-.feature__num{
-  font-family:var(--font-display);
-  font-size:13px;font-weight:600;letter-spacing:.14em;
-  color:var(--primary);
-  border:1px solid var(--hairline-strong);
-  border-radius:999px;
-  padding:5px 11px;
-  flex:none;
-}
-.feature__label h2{
-  font-size:clamp(26px,7.4vw,40px);
-  letter-spacing:-.02em;
-}
 
 /* ============================================================
    Closing CTA
@@ -378,20 +408,19 @@ a{color:inherit;text-decoration:none}
 }
 
 @media (min-width:900px){
-  /* Hero: phone holds the centre, brand and CTA sit to its right */
+  /* auto/auto + centred content keeps the pair balanced instead of
+     pinning the phone left and leaving dead space on the right */
   .hero__inner{
-    /* auto/auto + centred content keeps the pair balanced instead of
-       pinning the phone left and leaving dead space on the right */
     grid-template-columns:auto auto;
     justify-content:center;
-    align-items:center;
     justify-items:start;
-    gap:clamp(48px,7vw,88px);
+    column-gap:clamp(var(--stack-lg),7vw,88px);
   }
-  .hero__device{width:auto;justify-content:flex-end}
-  .hero__aside{justify-items:start;text-align:left}
+  .device--hero{--pw:clamp(280px,26vw,344px)}
+  .hero__aside{justify-items:start;text-align:left;gap:var(--stack-md)}
   .hero__title{justify-content:flex-start}
-  .hero__aside [data-appstore-note]{justify-content:flex-start}
+  .step--hero{gap:var(--gutter)}
+  .step--hero .step__num{font-size:13px;padding:5px 11px;letter-spacing:.14em}
 
   /* Alternate the devices left/right once there's room */
   .feature{
@@ -403,10 +432,10 @@ a{color:inherit;text-decoration:none}
     margin-inline:auto;
   }
   .feature__device{justify-content:flex-end}
-  .feature__label{justify-content:flex-start}
+  .feature .step{justify-content:flex-start}
 
   .feature:nth-child(even) .feature__device{order:2;justify-content:flex-start}
-  .feature:nth-child(even) .feature__label{order:1;justify-content:flex-end}
+  .feature:nth-child(even) .step{order:1;justify-content:flex-end}
 
   .device{--pw:clamp(280px,26vw,344px)}
 }
