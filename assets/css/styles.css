@@ -147,10 +147,8 @@ a{color:inherit;text-decoration:none}
   letter-spacing:.2em;
   display:inline-flex;align-items:baseline;gap:.42em;
 }
-.brand__ai{
-  color:var(--primary);
-  font-size:.72em;letter-spacing:.16em;
-}
+/* AI matches the wordmark's size exactly — colour alone sets it apart */
+.brand__ai{color:var(--primary)}
 .site-header .appstore--mini{margin-left:auto}
 
 /* ============================================================
@@ -166,25 +164,31 @@ a{color:inherit;text-decoration:none}
   background:radial-gradient(circle,rgba(39,224,138,.17) 0%,rgba(39,224,138,0) 68%);
   pointer-events:none;
 }
+/* Phone first, brand + CTA beside it (below it on phones) */
 .hero__inner{
   position:relative;
+  display:grid;
+  justify-items:center;
+  gap:clamp(32px,8vw,48px);
+}
+.hero__device{display:flex;justify-content:center;width:100%}
+
+.hero__aside{
   display:grid;justify-items:center;text-align:center;
-  gap:22px;
+  gap:20px;
 }
 .hero__mark{
   width:auto;
-  height:clamp(140px,34vw,208px);
+  height:clamp(104px,24vw,168px);
   filter:drop-shadow(0 0 42px rgba(39,224,138,.34));
 }
 .hero__title{
-  font-size:clamp(40px,12vw,72px);
-  letter-spacing:.06em;
-  display:flex;align-items:baseline;justify-content:center;gap:.2em;
+  font-size:clamp(34px,10.5vw,64px);
+  letter-spacing:.05em;
+  display:flex;align-items:baseline;justify-content:center;gap:.24em;
 }
-.hero__ai{
-  color:var(--primary);
-  font-size:.56em;letter-spacing:.1em;
-}
+/* Same size as CHIZZL — only the colour differs */
+.hero__ai{color:var(--primary)}
 .hero__note{font-size:13.5px;color:var(--on-surface-variant)}
 
 /* ============================================================
@@ -374,6 +378,21 @@ a{color:inherit;text-decoration:none}
 }
 
 @media (min-width:900px){
+  /* Hero: phone holds the centre, brand and CTA sit to its right */
+  .hero__inner{
+    /* auto/auto + centred content keeps the pair balanced instead of
+       pinning the phone left and leaving dead space on the right */
+    grid-template-columns:auto auto;
+    justify-content:center;
+    align-items:center;
+    justify-items:start;
+    gap:clamp(48px,7vw,88px);
+  }
+  .hero__device{width:auto;justify-content:flex-end}
+  .hero__aside{justify-items:start;text-align:left}
+  .hero__title{justify-content:flex-start}
+  .hero__aside [data-appstore-note]{justify-content:flex-start}
+
   /* Alternate the devices left/right once there's room */
   .feature{
     grid-template-columns:1fr 1fr;

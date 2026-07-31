@@ -29,7 +29,6 @@
 <header class="site-header" id="top">
   <div class="wrap site-header__inner">
     <a class="brand" href="#top" aria-label="CHIZZL AI home">
-      <img class="brand__mark" src="assets/img/logo-mark.png" alt="" width="495" height="720" decoding="async">
       <span class="brand__word">CHIZZL<span class="brand__ai">AI</span></span>
     </a>
 
@@ -53,8 +52,30 @@
   <section class="hero">
     <div class="hero__glow" aria-hidden="true"></div>
     <div class="wrap hero__inner">
+
+      <div class="hero__device">
+        <div class="device">
+          <div class="device__body">
+            <span class="device__btn device__btn--action" aria-hidden="true"></span>
+            <span class="device__btn device__btn--vol-up" aria-hidden="true"></span>
+            <span class="device__btn device__btn--vol-dn" aria-hidden="true"></span>
+            <span class="device__btn device__btn--power" aria-hidden="true"></span>
+            <div class="device__bezel">
+              <div class="device__screen">
+                <img src="assets/img/screens/muscles.jpg" width="900" height="1955"
+                     fetchpriority="high" decoding="async"
+                     alt="CHIZZL AI muscle map: a rotatable 3D body model highlighting the muscle groups trained, with most- and least-trained lists.">
+                <span class="device__island" aria-hidden="true"></span>
+              </div>
+            </div>
+            <span class="device__sheen" aria-hidden="true"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero__aside">
       <img class="hero__mark" src="assets/img/logo-mark.png" alt="CHIZZL AI"
-           width="495" height="720" fetchpriority="high" decoding="async">
+           width="495" height="720" decoding="async">
 
       <h1 class="hero__title">CHIZZL<span class="hero__ai">AI</span></h1>
 
@@ -74,6 +95,8 @@
       <p class="hero__note" id="appstore-note" data-appstore-note>
         <span class="pill">Coming soon</span>
       </p>
+      </div>
+
     </div>
   </section>
 
@@ -91,7 +114,7 @@
             <div class="device__bezel">
               <div class="device__screen">
                 <img src="assets/img/screens/scan.jpg" width="900" height="1955"
-                     fetchpriority="high" decoding="async"
+                     loading="lazy" decoding="async"
                      alt="Body Scan screen: three progress photos analysed into a physique score of 83 out of 100.">
                 <span class="device__island" aria-hidden="true"></span>
               </div>

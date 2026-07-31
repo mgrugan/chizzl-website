@@ -62,8 +62,8 @@ downscaling, so the Dynamic Island lands in the gap between the status-bar clock
 and the battery icons, exactly as it does on a real device. To swap one, drop in
 a file at the same aspect ratio.
 
-`analytics.jpg` and `muscles.jpg` are not currently referenced — they are kept
-so screens can be swapped without re-exporting.
+`analytics.jpg` is not currently referenced — it is kept so screens can be
+swapped without re-exporting.
 
 ## Notes
 
@@ -71,9 +71,11 @@ so screens can be swapped without re-exporting.
 system: dark-first surfaces, hairline borders instead of shadows, a 5%
 film-grain overlay, Space Grotesk for display and Manrope for body.
 
-**Responsive** — one device per feature, stacked on phones and alternating
-left/right from 900px. Verified free of horizontal overflow from 320px up.
-Honours `prefers-reduced-motion` and `prefers-contrast`.
+**Responsive** — the hero phone leads, with the mark, wordmark and App Store
+badge stacked beneath it on phones and moving to its right from 900px, where the
+pair is centred as a unit. Below that, one device per feature, stacked on phones
+and alternating left/right from 900px. Verified free of horizontal overflow from
+320px up. Honours `prefers-reduced-motion` and `prefers-contrast`.
 
 ## Credits
 
