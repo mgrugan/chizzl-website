@@ -32,15 +32,15 @@ export function HowItWorks() {
           ))}
         </div>
 
-        <Reveal className="hidden lg:block">
+        <Reveal className="order-first lg:order-none">
           <div
-            className="flex h-full items-center justify-center overflow-hidden rounded-card border border-hairline p-6"
+            className="flex h-full items-center justify-center overflow-hidden rounded-card border border-hairline p-5 lg:p-6"
             style={{ background: 'linear-gradient(160deg, #17181B 0%, #0E0F11 55%, #000 100%)' }}
           >
             <PhoneMockup
               src={SCREENS.home}
               alt="Dashboard showing a physique score of 76, a body fat estimate, and the day's workout."
-              width={188}
+              width="min(42vw, 188px)"
               rotate={4}
               float="slow"
             />

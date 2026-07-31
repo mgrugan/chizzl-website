@@ -24,15 +24,15 @@ export function PlanBento() {
       </Reveal>
 
       <div className="mt-8 grid gap-3 lg:grid-cols-3 lg:grid-rows-2">
-        <Reveal className="hidden lg:block lg:row-span-2">
+        <Reveal className="lg:row-span-2">
           <div
-            className="relative flex h-full items-center justify-center overflow-hidden rounded-card border border-hairline p-6"
+            className="relative flex h-full items-center justify-center overflow-hidden rounded-card border border-hairline p-5 lg:p-6"
             style={{ background: 'linear-gradient(160deg, #17181B 0%, #0E0F11 55%, #000 100%)' }}
           >
             <PhoneMockup
               src={SCREENS.coach}
               alt="AI Coach answering from the week's logged bench sessions."
-              width={180}
+              width="min(42vw, 180px)"
               rotate={-3}
               float="slow"
             />
