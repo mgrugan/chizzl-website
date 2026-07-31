@@ -15,7 +15,7 @@ const FACTS = [
 export function TrustStrip() {
   return (
     <section className="border-y border-hairline bg-elevated/60">
-      <Reveal className="mx-auto grid max-w-[1400px] gap-6 px-5 py-7 sm:grid-cols-3 lg:px-8">
+      <Reveal className="mx-auto grid max-w-[1400px] gap-6 px-5 py-5 sm:grid-cols-3 lg:px-8">
         {FACTS.map(({ Icon, label, detail }) => (
           <div key={label} className="flex items-center gap-3">
             <Icon size={20} weight="light" className="flex-none text-brand" />

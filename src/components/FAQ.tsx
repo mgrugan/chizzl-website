@@ -31,14 +31,14 @@ export function FAQ() {
 
   return (
     <section id="faq" className="border-t border-hairline">
-      <div className="mx-auto max-w-[900px] px-5 py-24 lg:px-8 lg:py-32">
+      <div className="mx-auto max-w-[900px] px-5 py-14 lg:px-8 lg:py-20">
         <Reveal>
-          <h2 className="font-display text-[clamp(30px,5vw,48px)] font-bold leading-[1.05] tracking-[-0.02em] text-ink">
+          <h2 className="font-display text-[clamp(26px,3.6vw,38px)] font-semibold leading-[1.08] tracking-[-0.02em] text-ink">
             Questions worth answering.
           </h2>
         </Reveal>
 
-        <div className="mt-12 divide-y divide-hairline border-y border-hairline">
+        <div className="mt-8 divide-y divide-hairline border-y border-hairline">
           {ITEMS.map((item, i) => {
             const expanded = open === i;
             return (
@@ -50,9 +50,9 @@ export function FAQ() {
                     aria-controls={`faq-panel-${i}`}
                     id={`faq-trigger-${i}`}
                     onClick={() => setOpen(expanded ? null : i)}
-                    className="flex w-full items-center justify-between gap-6 py-6 text-left"
+                    className="flex w-full items-center justify-between gap-6 py-5 text-left"
                   >
-                    <span className="font-display text-[17px] font-semibold text-ink lg:text-[19px]">
+                    <span className="font-display text-[16px] font-semibold text-ink lg:text-[17px]">
                       {item.q}
                     </span>
                     <PlusIcon
@@ -68,7 +68,7 @@ export function FAQ() {
                   aria-labelledby={`faq-trigger-${i}`}
                   hidden={!expanded}
                 >
-                  <p className="max-w-[68ch] pb-7 text-[15.5px] leading-relaxed text-ink-dim">
+                  <p className="max-w-[68ch] pb-6 text-[15px] leading-relaxed text-ink-dim">
                     {item.a}
                   </p>
                 </div>

@@ -8,19 +8,19 @@ import { SCREENS } from '../config';
  */
 export function HowItWorks() {
   return (
-    <section id="how" className="mx-auto max-w-[1400px] px-5 py-24 lg:px-8 lg:py-32">
+    <section id="how" className="mx-auto max-w-[1400px] px-5 py-14 lg:px-8 lg:py-20">
       <Reveal>
-        <h2 className="max-w-[16ch] font-display text-[clamp(30px,5vw,52px)] font-bold leading-[1.05] tracking-[-0.02em] text-ink">
+        <h2 className="max-w-[16ch] font-display text-[clamp(26px,3.6vw,40px)] font-semibold leading-[1.08] tracking-[-0.02em] text-ink">
           Three photos in. A real number out.
         </h2>
       </Reveal>
 
-      <div className="mt-16 grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-center lg:gap-16">
+      <div className="mt-10 grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-center lg:gap-12">
         <Reveal className="flex justify-center lg:justify-start">
           <PhoneMockup
             src={SCREENS.home}
             alt="Dashboard showing a physique score of 76, a body fat estimate, and the day's workout."
-            width={264}
+            width={216}
             rotate={-4}
             float="slow"
           />
@@ -33,9 +33,9 @@ export function HowItWorks() {
             { t: 'Train the plan', d: 'Sessions adjust to the volume you actually logged, not the volume you meant to hit.' },
           ].map((step, i) => (
             <Reveal key={step.t} delay={i * 0.08}>
-              <div className="bg-card p-7 lg:p-8">
+              <div className="bg-card p-6 lg:p-7">
                 <h3 className="font-display text-[19px] font-semibold text-ink">{step.t}</h3>
-                <p className="mt-2 max-w-[52ch] text-[15px] leading-relaxed text-ink-dim">{step.d}</p>
+                <p className="mt-1.5 max-w-[52ch] text-[14.5px] leading-relaxed text-ink-dim">{step.d}</p>
               </div>
             </Reveal>
           ))}

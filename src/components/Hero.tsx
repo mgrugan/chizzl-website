@@ -16,7 +16,7 @@ export function Hero() {
   });
 
   return (
-    <section id="top" className="relative overflow-hidden pt-14 pb-20 lg:pt-24 lg:pb-28">
+    <section id="top" className="relative overflow-hidden pt-10 pb-12 lg:pt-16 lg:pb-14">
       {/* Brand bloom. Sits behind everything, never intercepts pointers. */}
       <div
         aria-hidden="true"
@@ -24,7 +24,7 @@ export function Hero() {
         style={{ background: 'radial-gradient(circle, rgba(39,224,138,.16) 0%, rgba(39,224,138,0) 68%)' }}
       />
 
-      <div className="relative mx-auto grid max-w-[1400px] grid-cols-1 items-center gap-14 px-5 lg:grid-cols-[1.02fr_1fr] lg:gap-8 lg:px-8">
+      <div className="relative mx-auto grid max-w-[1400px] grid-cols-1 items-center gap-10 px-5 lg:grid-cols-[1.02fr_1fr] lg:gap-8 lg:px-8">
         {/* Message */}
         <div className="max-w-xl">
           <motion.p {...enter(0)} className="eyebrow">
@@ -33,20 +33,20 @@ export function Hero() {
 
           <motion.h1
             {...enter(0.08)}
-            className="mt-4 font-display text-[clamp(38px,8.5vw,68px)] font-bold leading-[1.03] tracking-[-0.03em] text-balance text-ink"
+            className="mt-4 font-display text-[clamp(34px,7.5vw,56px)] font-semibold leading-[1.05] tracking-[-0.03em] text-balance text-ink"
           >
             Know exactly where you <span className="brand-gradient-text">stand</span>.
           </motion.h1>
 
           <motion.p
             {...enter(0.16)}
-            className="mt-5 max-w-[46ch] text-[clamp(16px,2vw,19px)] leading-relaxed text-ink-dim"
+            className="mt-4 max-w-[44ch] text-[clamp(15px,1.8vw,17px)] leading-relaxed text-ink-dim"
           >
             Scan your physique, get an honest body fat estimate, and train against a plan
             that adapts to what you actually lifted.
           </motion.p>
 
-          <motion.div {...enter(0.24)} className="mt-9 flex flex-wrap items-center gap-3">
+          <motion.div {...enter(0.24)} className="mt-7 flex flex-wrap items-center gap-3">
             <AppStoreBadge />
             <a
               href="#how"
@@ -62,14 +62,14 @@ export function Hero() {
           initial={reduce ? false : { opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="relative flex min-h-[460px] items-center justify-center lg:min-h-[640px]"
+          className="relative flex min-h-[400px] items-center justify-center lg:min-h-[540px]"
         >
           {/* Back left, deepest */}
           <div className="absolute left-[2%] top-[8%] hidden opacity-70 sm:block lg:left-[-2%]">
             <PhoneMockup
               src={SCREENS.muscles}
               alt="Muscle map highlighting the groups trained this week."
-              width={172}
+              width={150}
               rotate={-9}
               float="slower"
             />
@@ -80,7 +80,7 @@ export function Hero() {
             <PhoneMockup
               src={SCREENS.coach}
               alt="Coach reviewing the week and setting the next targets."
-              width={188}
+              width={162}
               rotate={8}
               float="slow"
             />
@@ -91,7 +91,7 @@ export function Hero() {
             <PhoneMockup
               src={SCREENS.scan}
               alt="Body Scan turning three progress photos into a physique score of 83 out of 100 with a body fat estimate."
-              width={278}
+              width={240}
               rotate={-3}
               live
               priority
