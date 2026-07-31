@@ -30,9 +30,11 @@ export function Hero() {
           <img
             src={asset('img/logo-tile.png')}
             alt="CHIZZL AI app icon"
-            width={512}
-            height={512}
-            className="h-14 w-14 rounded-[14px] lg:h-16 lg:w-16 lg:rounded-2xl"
+            width={320}
+            height={320}
+            /* No CSS border-radius: the tile carries its own corners and
+               border. Rounding again clips them off. */
+            className="h-14 w-14 lg:h-16 lg:w-16"
             fetchPriority="high"
             decoding="async"
           />
