@@ -1,0 +1,252 @@
+@import "tailwindcss";
+
+/* ============================================================
+   Self-hosted type. Never linked from Google Fonts in production.
+   ============================================================ */
+@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:500;font-display:swap;
+  src:url('/chizzl-website/assets/fonts/space-grotesk-500-latin.woff2') format('woff2')}
+@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:600;font-display:swap;
+  src:url('/chizzl-website/assets/fonts/space-grotesk-600-latin.woff2') format('woff2')}
+@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:700;font-display:swap;
+  src:url('/chizzl-website/assets/fonts/space-grotesk-700-latin.woff2') format('woff2')}
+@font-face{font-family:'Manrope';font-style:normal;font-weight:400;font-display:swap;
+  src:url('/chizzl-website/assets/fonts/manrope-400-latin.woff2') format('woff2')}
+@font-face{font-family:'Manrope';font-style:normal;font-weight:500;font-display:swap;
+  src:url('/chizzl-website/assets/fonts/manrope-500-latin.woff2') format('woff2')}
+@font-face{font-family:'Manrope';font-style:normal;font-weight:600;font-display:swap;
+  src:url('/chizzl-website/assets/fonts/manrope-600-latin.woff2') format('woff2')}
+@font-face{font-family:'Manrope';font-style:normal;font-weight:700;font-display:swap;
+  src:url('/chizzl-website/assets/fonts/manrope-700-latin.woff2') format('woff2')}
+
+/* ============================================================
+   Theme — generated from DESIGN.md. Edit DESIGN.md, not here.
+   ============================================================ */
+@theme {
+  --color-ground: #000000;          /* brand book specifies true black for OLED */
+  --color-elevated: #0C0D0E;
+  --color-card: #0E0F11;
+  --color-inset: #17181B;
+  --color-bone: #262C31;
+
+  --color-ink: #F5F5F7;
+  --color-ink-dim: #A2A7A5;
+  --color-ink-faint: #63696B;
+
+  --color-brand: #27E08A;
+  --color-brand-dim: #1AA866;
+  --color-on-brand: #06210F;
+  --color-lime: #C6FF3D;
+  --color-teal: #0FB5A6;
+
+  --color-hairline: rgba(140, 240, 190, 0.12);
+  --color-hairline-strong: rgba(150, 245, 195, 0.22);
+
+  --font-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --font-body: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+
+  --radius-card: 1rem;
+  --radius-control: 0.5rem;
+}
+
+/* ============================================================
+   Base
+   ============================================================ */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--color-ground);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  /* Screen backdrop: content emerges from black rather than sitting on it. */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(180deg, #141518 0%, #08090A 45%, #000000 100%);
+    pointer-events: none;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  ::selection { background: var(--color-brand); color: var(--color-on-brand); }
+}
+
+@layer utilities {
+  .font-display { font-family: var(--font-display); }
+  .text-balance { text-wrap: balance; }
+
+  /* Section label. Rationed — see the eyebrow budget in DESIGN.md. */
+  .eyebrow {
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-ink-faint);
+  }
+
+  .brand-gradient-text {
+    background: linear-gradient(96deg, var(--color-lime), var(--color-brand) 46%, var(--color-teal));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Glass, per the brand's glass gradient. Solid fallback below. */
+  .glass {
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02)),
+      rgba(8, 9, 10, 0.72);
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    border: 1px solid var(--color-hairline);
+  }
+  @media (prefers-reduced-transparency: reduce) {
+    .glass { background: #0C0D0E; backdrop-filter: none; -webkit-backdrop-filter: none; }
+  }
+}
+
+/* ============================================================
+   Film grain — fixed, pointer-events-none, never on a scroller.
+   ============================================================ */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ============================================================
+   iPhone mockup
+   Titanium rail -> black bezel -> screen. Every dimension derives
+   from --pw so a mockup rescales by changing one value.
+   2D rotation only: the brand book rules out perspective/3D.
+   ============================================================ */
+.device {
+  --pw: 280px;
+  --band: calc(var(--pw) * 0.013);
+  --bez: calc(var(--pw) * 0.019);
+  --rad: calc(var(--pw) * 0.155);
+  width: var(--pw);
+  flex: none;
+}
+
+.device__body {
+  position: relative;
+  padding: var(--band);
+  border-radius: var(--rad);
+  background: #0b0c0e;
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,.6),
+    0 2px 5px rgba(0,0,0,.5),
+    0 24px 50px -16px rgba(0,0,0,.88),
+    0 56px 110px -40px rgba(0,0,0,.92),
+    0 0 80px -28px rgba(39,224,138,.22);
+}
+
+/* The rail. An oversized linear gradient rotates beneath a clipped rim,
+   12s linear loop. The four disperse stops are the green band that makes
+   the chrome read as chrome-with-green rather than grey. */
+.device__rim {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+  z-index: 0;
+}
+.device__rim::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 280%;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  background: linear-gradient(90deg,
+    #F2F4F8 0%, #A9B1C0 9%, #4A4E59 18%,
+    #8FDE6F 27%, #E9FBD9 33%, #7CE8B4 38%, #3BB98A 44%,
+    #343741 55%, #E9ECF2 66%, #A9B1C0 76%, #4A4E59 86%, #F2F4F8 100%);
+  opacity: .92;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .device--live .device__rim::before { animation: metal-wash 12s linear infinite; }
+}
+@keyframes metal-wash { from { rotate: 0deg } to { rotate: 360deg } }
+
+.device__bezel {
+  position: relative;
+  z-index: 1;
+  padding: var(--bez);
+  border-radius: calc(var(--rad) - var(--band));
+  background: #040605;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.055);
+}
+
+.device__screen {
+  position: relative;
+  aspect-ratio: 900 / 1955;
+  border-radius: calc(var(--rad) - var(--band) - var(--bez));
+  overflow: hidden;
+  background: #000;
+}
+.device__screen img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+
+.device__island {
+  position: absolute;
+  top: calc(var(--pw) * 0.028);
+  left: 50%;
+  translate: -50% 0;
+  width: calc(var(--pw) * 0.266);
+  height: calc(var(--pw) * 0.077);
+  background: #000;
+  border-radius: 999px;
+  z-index: 2;
+}
+
+/* Glass reflection, kept faint so the screenshot stays readable. */
+.device__sheen {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: var(--rad);
+  pointer-events: none;
+  background: linear-gradient(114deg,
+    rgba(255,255,255,.085) 0%, rgba(255,255,255,.028) 13%,
+    rgba(255,255,255,0) 31%, rgba(255,255,255,0) 74%,
+    rgba(255,255,255,.022) 89%, rgba(255,255,255,.055) 100%);
+}
+
+.device__btn {
+  position: absolute;
+  z-index: 1;
+  width: calc(var(--pw) * 0.0115);
+  background: linear-gradient(180deg,#5a645d,#aab4ad 22%,#c8d1ca 50%,#8b958e 74%,#3d453f);
+  box-shadow: 0 0 0 .5px rgba(0,0,0,.55);
+}
+.device__btn--l { left: calc(var(--pw) * -0.0072); border-radius: 2px 0 0 2px; }
+.device__btn--r { right: calc(var(--pw) * -0.0072); border-radius: 0 2px 2px 0; }
+.device__btn--action { top: 16.5%; height: 3.4%; }
+.device__btn--volup  { top: 23.2%; height: 6.6%; }
+.device__btn--voldn  { top: 31.4%; height: 6.6%; }
+.device__btn--power  { top: 25.0%; height: 10.6%; }
+
+/* Ambient float. Calm and continuous, never bouncy. */
+@media (prefers-reduced-motion: no-preference) {
+  .float-slow { animation: float 9s ease-in-out infinite; }
+  .float-slower { animation: float 12s ease-in-out infinite; animation-delay: -3s; }
+}
+@keyframes float {
+  0%, 100% { translate: 0 0 }
+  50%      { translate: 0 -14px }
+}

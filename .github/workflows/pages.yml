@@ -7,13 +7,11 @@ on:
       - main
   workflow_dispatch:
 
-# Allow GITHUB_TOKEN to deploy to Pages via OIDC
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Let a running deploy finish rather than cancelling it mid-publish
 concurrency:
   group: pages
   cancel-in-progress: false
@@ -25,35 +23,37 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Configure Pages
-        # enablement turns Pages on if it isn't already, so no manual
-        # settings toggle is needed for the first deploy
-        uses: actions/configure-pages@v5
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # The site is now a Vite build, so the repo root is source, not output.
+      # GitHub's legacy branch builder would publish that source verbatim and
+      # serve a broken page, so Pages has to build from Actions instead. This
+      # flips the source once; it is a no-op on every run after the first.
+      - name: Build Pages from Actions, not from the branch
+        run: |
+          code=$(curl -sS -o /tmp/pages.json -w '%{http_code}' -X PUT \
+            -H "Authorization: Bearer ${{ github.token }}" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${{ github.repository }}/pages" \
+            -d '{"build_type":"workflow"}')
+          echo "set build_type=workflow -> HTTP $code"
+          cat /tmp/pages.json 2>/dev/null || true
+
+      - uses: actions/configure-pages@v5
         with:
           enablement: true
 
-      # Asset versions are stamped at commit time by tools/stamp.py, not here,
-      # because GitHub's legacy branch builder also publishes this repo and
-      # serves it verbatim — anything done only in this workflow would be
-      # skipped whenever that builder wins the race. This step just fails the
-      # build if someone committed without re-stamping.
-      - name: Verify asset versions are current
-        run: |
-          python3 tools/stamp.py
-          if ! git diff --quiet -- index.html; then
-            echo "::error::index.html asset versions are stale. Run 'python3 tools/stamp.py' and commit."
-            git --no-pager diff -- index.html
-            exit 1
-          fi
-          grep -o 'assets/[^"]*?v=[^"]*' index.html
+      - run: npm ci
+      - run: npm run build
 
-      - name: Upload site
-        uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: dist
 
       - name: Deploy
         id: deployment

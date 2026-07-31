@@ -4,193 +4,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>CHIZZL AI</title>
-<meta name="description" content="CHIZZL AI — body scan, body fat percentage, and a personalized plan.">
-<meta name="theme-color" content="#0d150f">
+<meta name="description" content="Scan your physique, get an honest body fat estimate, and train against a plan that adapts. Coming to iPhone.">
+<meta name="theme-color" content="#000000">
 <meta name="color-scheme" content="dark">
-
 <meta property="og:type" content="website">
 <meta property="og:title" content="CHIZZL AI">
-<meta property="og:description" content="Body scan, body fat percentage, and a personalized plan.">
-<meta property="og:image" content="assets/img/og-image.png">
+<meta property="og:description" content="Scan your physique, get an honest body fat estimate, and train against a plan that adapts.">
+<meta property="og:image" content="/chizzl-website/assets/img/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
-
-<link rel="icon" href="assets/img/favicon.png" type="image/png">
-<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
-
-<link rel="preload" href="assets/fonts/space-grotesk-700-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/fonts/manrope-400-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/css/fonts.css?v=74c9294734">
-<link rel="stylesheet" href="assets/css/styles.css?v=74c9294734">
+<link rel="icon" href="/chizzl-website/assets/img/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="/chizzl-website/assets/img/apple-touch-icon.png">
+<link rel="preload" href="/chizzl-website/assets/fonts/space-grotesk-700-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/chizzl-website/assets/fonts/manrope-400-latin.woff2" as="font" type="font/woff2" crossorigin>
 </head>
 <body>
-
-<a class="skip-link" href="#main">Skip to content</a>
-
-<header class="site-header" id="top">
-  <div class="wrap site-header__inner">
-    <a class="brand" href="#top" aria-label="CHIZZL AI home">
-      <span class="brand__word">CHIZZL<span class="brand__ai">AI</span></span>
-    </a>
-
-    <a class="appstore appstore--mini is-locked"
-       role="link" aria-disabled="true" tabindex="-1" data-appstore
-       aria-label="Download on the App Store">
-      <svg class="appstore__glyph" viewBox="0 0 22.773 22.773" aria-hidden="true" focusable="false">
-        <path d="M15.769 0h.162c.13 1.606-.483 2.806-1.228 3.675-.731.863-1.732 1.7-3.351 1.573-.108-1.583.506-2.694 1.25-3.561C13.292.879 14.557.1 15.769 0zM20.67 16.716v.045c-.455 1.378-1.104 2.559-1.896 3.655-.723.995-1.609 2.334-3.191 2.334-1.367 0-2.275-.879-3.676-.903-1.482-.024-2.297.735-3.652.926h-.462c-.995-.144-1.798-.932-2.383-1.642-1.725-2.098-3.058-4.808-3.306-8.276v-1.019c.105-2.482 1.311-4.5 2.914-5.478.846-.52 2.009-.963 3.304-.765.555.086 1.122.276 1.619.464.471.181 1.06.502 1.618.485.378-.011.754-.208 1.135-.347 1.116-.403 2.21-.865 3.652-.648 1.733.262 2.963 1.032 3.723 2.22-1.466.933-2.625 2.339-2.427 4.74.176 1.673 1.462 2.872 3.146 3.58z"/>
-      </svg>
-      <span class="appstore__text">
-        <span class="appstore__sub">Download on the</span>
-        <span class="appstore__main">App Store</span>
-      </span>
-    </a>
-  </div>
-</header>
-
-<main id="main">
-
-  <!-- ── Hero — step 01 lives here, so it isn't repeated below ─ -->
-  <section class="hero">
-    <div class="hero__glow" aria-hidden="true"></div>
-    <div class="wrap hero__inner">
-
-      <div class="hero__device">
-        <div class="device device--hero">
-          <div class="device__body">
-            <span class="device__btn device__btn--action" aria-hidden="true"></span>
-            <span class="device__btn device__btn--vol-up" aria-hidden="true"></span>
-            <span class="device__btn device__btn--vol-dn" aria-hidden="true"></span>
-            <span class="device__btn device__btn--power" aria-hidden="true"></span>
-            <div class="device__bezel">
-              <div class="device__screen">
-                <img src="assets/img/screens/scan.jpg" width="900" height="1955"
-                     fetchpriority="high" decoding="async"
-                     alt="CHIZZL AI Body Scan: three progress photos analysed into a physique score of 83 out of 100 with a body fat estimate.">
-                <span class="device__island" aria-hidden="true"></span>
-              </div>
-            </div>
-            <span class="device__sheen" aria-hidden="true"></span>
-          </div>
-        </div>
-
-        <div class="step step--hero">
-          <span class="step__num" aria-hidden="true">01</span>
-          <h2>Body Scan</h2>
-        </div>
-      </div>
-
-      <div class="hero__aside">
-        <img class="hero__mark" src="assets/img/logo-mark.png" alt="CHIZZL AI"
-             width="495" height="720" decoding="async">
-
-        <p class="hero__title">CHIZZL<span class="hero__ai">AI</span></p>
-
-        <a class="appstore appstore--compact is-locked"
-           role="link" aria-disabled="true" tabindex="-1" data-appstore
-           aria-label="Download on the App Store">
-          <svg class="appstore__glyph" viewBox="0 0 22.773 22.773" aria-hidden="true" focusable="false">
-            <path d="M15.769 0h.162c.13 1.606-.483 2.806-1.228 3.675-.731.863-1.732 1.7-3.351 1.573-.108-1.583.506-2.694 1.25-3.561C13.292.879 14.557.1 15.769 0zM20.67 16.716v.045c-.455 1.378-1.104 2.559-1.896 3.655-.723.995-1.609 2.334-3.191 2.334-1.367 0-2.275-.879-3.676-.903-1.482-.024-2.297.735-3.652.926h-.462c-.995-.144-1.798-.932-2.383-1.642-1.725-2.098-3.058-4.808-3.306-8.276v-1.019c.105-2.482 1.311-4.5 2.914-5.478.846-.52 2.009-.963 3.304-.765.555.086 1.122.276 1.619.464.471.181 1.06.502 1.618.485.378-.011.754-.208 1.135-.347 1.116-.403 2.21-.865 3.652-.648 1.733.262 2.963 1.032 3.723 2.22-1.466.933-2.625 2.339-2.427 4.74.176 1.673 1.462 2.872 3.146 3.58z"/>
-          </svg>
-          <span class="appstore__text">
-            <span class="appstore__sub">Download on the</span>
-            <span class="appstore__main">App Store</span>
-          </span>
-        </a>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ── Steps 02 and 03 ──────────────────────────────────── -->
-  <section class="features" aria-label="Features">
-
-    <article class="feature">
-      <div class="feature__device">
-        <div class="device">
-          <div class="device__body">
-            <span class="device__btn device__btn--action" aria-hidden="true"></span>
-            <span class="device__btn device__btn--vol-up" aria-hidden="true"></span>
-            <span class="device__btn device__btn--vol-dn" aria-hidden="true"></span>
-            <span class="device__btn device__btn--power" aria-hidden="true"></span>
-            <div class="device__bezel">
-              <div class="device__screen">
-                <img src="assets/img/screens/home.jpg" width="900" height="1955" loading="lazy" decoding="async"
-                     alt="Dashboard showing a physique score of 76 and a body fat estimate of 12 to 16 percent.">
-                <span class="device__island" aria-hidden="true"></span>
-              </div>
-            </div>
-            <span class="device__sheen" aria-hidden="true"></span>
-          </div>
-        </div>
-      </div>
-      <div class="step">
-        <span class="step__num" aria-hidden="true">02</span>
-        <h2>Body Fat Percentage</h2>
-      </div>
-    </article>
-
-    <article class="feature">
-      <div class="feature__device">
-        <div class="device">
-          <div class="device__body">
-            <span class="device__btn device__btn--action" aria-hidden="true"></span>
-            <span class="device__btn device__btn--vol-up" aria-hidden="true"></span>
-            <span class="device__btn device__btn--vol-dn" aria-hidden="true"></span>
-            <span class="device__btn device__btn--power" aria-hidden="true"></span>
-            <div class="device__bezel">
-              <div class="device__screen">
-                <img src="assets/img/screens/coach.jpg" width="900" height="1955" loading="lazy" decoding="async"
-                     alt="AI coach reviewing the week's sessions and setting the next targets.">
-                <span class="device__island" aria-hidden="true"></span>
-              </div>
-            </div>
-            <span class="device__sheen" aria-hidden="true"></span>
-          </div>
-        </div>
-      </div>
-      <div class="step">
-        <span class="step__num" aria-hidden="true">03</span>
-        <h2>Personalized Plan</h2>
-      </div>
-    </article>
-
-  </section>
-
-  <!-- ── Closing CTA ──────────────────────────────────────── -->
-  <section class="cta">
-    <div class="cta__glow" aria-hidden="true"></div>
-    <div class="wrap cta__inner">
-      <a class="appstore is-locked"
-         role="link" aria-disabled="true" tabindex="-1" data-appstore
-         aria-label="Download on the App Store">
-        <svg class="appstore__glyph" viewBox="0 0 22.773 22.773" aria-hidden="true" focusable="false">
-          <path d="M15.769 0h.162c.13 1.606-.483 2.806-1.228 3.675-.731.863-1.732 1.7-3.351 1.573-.108-1.583.506-2.694 1.25-3.561C13.292.879 14.557.1 15.769 0zM20.67 16.716v.045c-.455 1.378-1.104 2.559-1.896 3.655-.723.995-1.609 2.334-3.191 2.334-1.367 0-2.275-.879-3.676-.903-1.482-.024-2.297.735-3.652.926h-.462c-.995-.144-1.798-.932-2.383-1.642-1.725-2.098-3.058-4.808-3.306-8.276v-1.019c.105-2.482 1.311-4.5 2.914-5.478.846-.52 2.009-.963 3.304-.765.555.086 1.122.276 1.619.464.471.181 1.06.502 1.618.485.378-.011.754-.208 1.135-.347 1.116-.403 2.21-.865 3.652-.648 1.733.262 2.963 1.032 3.723 2.22-1.466.933-2.625 2.339-2.427 4.74.176 1.673 1.462 2.872 3.146 3.58z"/>
-        </svg>
-        <span class="appstore__text">
-          <span class="appstore__sub">Download on the</span>
-          <span class="appstore__main">App Store</span>
-        </span>
-      </a>
-      <p class="cta__meta">Requires iPhone.</p>
-    </div>
-  </section>
-
-</main>
-
-<footer class="site-footer">
-  <div class="wrap site-footer__inner">
-    <a class="brand" href="#top" aria-label="CHIZZL AI home">
-      <img class="brand__mark" src="assets/img/logo-mark.png" alt="" width="495" height="720" loading="lazy" decoding="async">
-      <span class="brand__word">CHIZZL<span class="brand__ai">AI</span></span>
-    </a>
-    <p class="site-footer__legal">
-      © <span data-year>2026</span> CHIZZL AI. Apple and the Apple logo are trademarks of Apple Inc.
-    </p>
-  </div>
-</footer>
-
-<div class="grain" aria-hidden="true"></div>
-
-<script src="assets/js/in-app-browser.js?v=74c9294734" defer></script>
-<script src="assets/js/main.js?v=74c9294734" defer></script>
+<div id="root"></div>
+<script type="module" src="/src/main.tsx"></script>
 </body>
 </html>
