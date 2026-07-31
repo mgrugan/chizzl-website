@@ -26,7 +26,7 @@ const APP_STORE_URL = '';
     badge.classList.remove('is-locked');
     badge.removeAttribute('aria-disabled');
     badge.removeAttribute('tabindex');
-    badge.setAttribute('aria-label', 'Download CHIZZL on the App Store');
+    badge.setAttribute('aria-label', 'Download CHIZZL AI on the App Store');
   });
 
   // Drop the "Coming soon" notes once the link is real

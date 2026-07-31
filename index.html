@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>CHIZZL — Earn Your Strength</title>
-<meta name="description" content="Premium physique tracking, AI-powered coaching, and honest calibration. Body scans, volume analytics, and a coach that knows your data. Coming soon to iOS.">
+<title>CHIZZL AI</title>
+<meta name="description" content="CHIZZL AI — body scan, body fat percentage, and a personalized plan. Coming soon to iPhone.">
 <meta name="theme-color" content="#0d150f">
 <meta name="color-scheme" content="dark">
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="CHIZZL — Earn Your Strength">
-<meta property="og:description" content="Premium physique tracking, AI-powered coaching, and honest calibration. Coming soon to iOS.">
-<meta property="og:image" content="assets/img/logo-full.png">
+<meta property="og:title" content="CHIZZL AI">
+<meta property="og:description" content="Body scan, body fat percentage, and a personalized plan. Coming soon to iPhone.">
+<meta property="og:image" content="assets/img/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="icon" href="assets/img/favicon.png" type="image/png">
@@ -28,23 +28,13 @@
 
 <header class="site-header" id="top">
   <div class="wrap site-header__inner">
-    <a class="brand" href="#top" aria-label="CHIZZL home">
-      <img class="brand__mark" src="assets/img/logo-mark.png" alt="" width="512" height="389" decoding="async">
-      <span class="brand__word">CHIZZL</span>
+    <a class="brand" href="#top" aria-label="CHIZZL AI home">
+      <img class="brand__mark" src="assets/img/logo-mark.png" alt="" width="495" height="720" decoding="async">
+      <span class="brand__word">CHIZZL<span class="brand__ai">AI</span></span>
     </a>
 
-    <nav class="site-nav" aria-label="Primary">
-      <a href="#capabilities">Features</a>
-      <a href="#calibration">Science</a>
-      <a href="#tiers">Tiers</a>
-    </nav>
-
-    <!-- Compact badge: same activation hook as the hero badge -->
     <a class="appstore appstore--mini is-locked"
-       role="link"
-       aria-disabled="true"
-       tabindex="-1"
-       data-appstore
+       role="link" aria-disabled="true" tabindex="-1" data-appstore
        aria-label="Download on the App Store — coming soon">
       <svg class="appstore__glyph" viewBox="0 0 22.773 22.773" aria-hidden="true" focusable="false">
         <path d="M15.769 0h.162c.13 1.606-.483 2.806-1.228 3.675-.731.863-1.732 1.7-3.351 1.573-.108-1.583.506-2.694 1.25-3.561C13.292.879 14.557.1 15.769 0zM20.67 16.716v.045c-.455 1.378-1.104 2.559-1.896 3.655-.723.995-1.609 2.334-3.191 2.334-1.367 0-2.275-.879-3.676-.903-1.482-.024-2.297.735-3.652.926h-.462c-.995-.144-1.798-.932-2.383-1.642-1.725-2.098-3.058-4.808-3.306-8.276v-1.019c.105-2.482 1.311-4.5 2.914-5.478.846-.52 2.009-.963 3.304-.765.555.086 1.122.276 1.619.464.471.181 1.06.502 1.618.485.378-.011.754-.208 1.135-.347 1.116-.403 2.21-.865 3.652-.648 1.733.262 2.963 1.032 3.723 2.22-1.466.933-2.625 2.339-2.427 4.74.176 1.673 1.462 2.872 3.146 3.58z"/>
@@ -63,355 +53,129 @@
   <section class="hero">
     <div class="hero__glow" aria-hidden="true"></div>
     <div class="wrap hero__inner">
+      <img class="hero__mark" src="assets/img/logo-mark.png" alt="CHIZZL AI"
+           width="495" height="720" fetchpriority="high" decoding="async">
 
-      <div class="hero__copy">
-        <p class="eyebrow"><span class="eyebrow__dot" aria-hidden="true"></span>Forged in Iron</p>
-        <h1 class="hero__title">Earn Your<br><span class="chrome">Strength</span></h1>
-        <p class="hero__lede">
-          Premium physique tracking, AI-powered insights, and the liquid-metal signal
-          of elite performance. Data is the new iron.
-        </p>
+      <h1 class="hero__title">CHIZZL<span class="hero__ai">AI</span></h1>
 
-        <div class="hero__cta">
-          <!-- Primary CTA. Unclickable until APP_STORE_URL is set in assets/js/main.js -->
-          <a class="appstore is-locked"
-             role="link"
-             aria-disabled="true"
-             tabindex="-1"
-             data-appstore
-             aria-describedby="appstore-note"
-             aria-label="Download on the App Store — coming soon">
-            <svg class="appstore__glyph" viewBox="0 0 22.773 22.773" aria-hidden="true" focusable="false">
-              <path d="M15.769 0h.162c.13 1.606-.483 2.806-1.228 3.675-.731.863-1.732 1.7-3.351 1.573-.108-1.583.506-2.694 1.25-3.561C13.292.879 14.557.1 15.769 0zM20.67 16.716v.045c-.455 1.378-1.104 2.559-1.896 3.655-.723.995-1.609 2.334-3.191 2.334-1.367 0-2.275-.879-3.676-.903-1.482-.024-2.297.735-3.652.926h-.462c-.995-.144-1.798-.932-2.383-1.642-1.725-2.098-3.058-4.808-3.306-8.276v-1.019c.105-2.482 1.311-4.5 2.914-5.478.846-.52 2.009-.963 3.304-.765.555.086 1.122.276 1.619.464.471.181 1.06.502 1.618.485.378-.011.754-.208 1.135-.347 1.116-.403 2.21-.865 3.652-.648 1.733.262 2.963 1.032 3.723 2.22-1.466.933-2.625 2.339-2.427 4.74.176 1.673 1.462 2.872 3.146 3.58z"/>
-            </svg>
-            <span class="appstore__text">
-              <span class="appstore__sub">Download on the</span>
-              <span class="appstore__main">App Store</span>
-            </span>
-          </a>
+      <a class="appstore is-locked"
+         role="link" aria-disabled="true" tabindex="-1" data-appstore
+         aria-describedby="appstore-note"
+         aria-label="Download on the App Store — coming soon">
+        <svg class="appstore__glyph" viewBox="0 0 22.773 22.773" aria-hidden="true" focusable="false">
+          <path d="M15.769 0h.162c.13 1.606-.483 2.806-1.228 3.675-.731.863-1.732 1.7-3.351 1.573-.108-1.583.506-2.694 1.25-3.561C13.292.879 14.557.1 15.769 0zM20.67 16.716v.045c-.455 1.378-1.104 2.559-1.896 3.655-.723.995-1.609 2.334-3.191 2.334-1.367 0-2.275-.879-3.676-.903-1.482-.024-2.297.735-3.652.926h-.462c-.995-.144-1.798-.932-2.383-1.642-1.725-2.098-3.058-4.808-3.306-8.276v-1.019c.105-2.482 1.311-4.5 2.914-5.478.846-.52 2.009-.963 3.304-.765.555.086 1.122.276 1.619.464.471.181 1.06.502 1.618.485.378-.011.754-.208 1.135-.347 1.116-.403 2.21-.865 3.652-.648 1.733.262 2.963 1.032 3.723 2.22-1.466.933-2.625 2.339-2.427 4.74.176 1.673 1.462 2.872 3.146 3.58z"/>
+        </svg>
+        <span class="appstore__text">
+          <span class="appstore__sub">Download on the</span>
+          <span class="appstore__main">App Store</span>
+        </span>
+      </a>
 
-          <a class="btn btn--ghost" href="#showcase">See it in motion</a>
-        </div>
+      <p class="hero__note" id="appstore-note" data-appstore-note>
+        <span class="pill">Coming soon</span>
+      </p>
+    </div>
+  </section>
 
-        <p class="hero__note" id="appstore-note" data-appstore-note>
-          <span class="pill">Coming soon</span>
-          Available on the App Store shortly — iPhone first.
-        </p>
-      </div>
+  <!-- ── The three features ───────────────────────────────── -->
+  <section class="features" aria-label="Features">
 
-      <div class="hero__device">
-        <div class="device device--hero">
-          <div class="device__frame">
+    <article class="feature">
+      <div class="feature__device">
+        <div class="device">
+          <div class="device__body">
             <span class="device__btn device__btn--action" aria-hidden="true"></span>
             <span class="device__btn device__btn--vol-up" aria-hidden="true"></span>
             <span class="device__btn device__btn--vol-dn" aria-hidden="true"></span>
             <span class="device__btn device__btn--power" aria-hidden="true"></span>
-            <div class="device__screen">
-              <img src="assets/img/screens/home.jpg"
-                   alt="CHIZZL home screen showing a physique score of 76, a 5-day streak, 16,173 lb lifted this week, and the day's workout and nutrition targets."
-                   width="900" height="1955" fetchpriority="high" decoding="async">
-              <span class="device__island" aria-hidden="true"></span>
-              <span class="device__glare" aria-hidden="true"></span>
+            <div class="device__bezel">
+              <div class="device__screen">
+                <img src="assets/img/screens/scan.jpg" width="900" height="1955"
+                     fetchpriority="high" decoding="async"
+                     alt="Body Scan screen: three progress photos analysed into a physique score of 83 out of 100.">
+                <span class="device__island" aria-hidden="true"></span>
+              </div>
             </div>
+            <span class="device__sheen" aria-hidden="true"></span>
           </div>
         </div>
       </div>
-
-    </div>
-  </section>
-
-  <!-- ── Marquee stats ────────────────────────────────────── -->
-  <section class="stats" aria-label="At a glance">
-    <div class="wrap stats__grid">
-      <div class="stat">
-        <p class="stat__label">Physique score</p>
-        <p class="stat__value">83<span class="stat__unit">/100</span></p>
+      <div class="feature__label">
+        <span class="feature__num" aria-hidden="true">01</span>
+        <h2>Body Scan</h2>
       </div>
-      <div class="stat">
-        <p class="stat__label">Tracked this week</p>
-        <p class="stat__value">16,173<span class="stat__unit">lb</span></p>
-      </div>
-      <div class="stat">
-        <p class="stat__label">Body-fat estimate</p>
-        <p class="stat__value">13<span class="stat__unit">%</span></p>
-      </div>
-      <div class="stat">
-        <p class="stat__label">Muscle groups mapped</p>
-        <p class="stat__value">14<span class="stat__unit">+</span></p>
-      </div>
-    </div>
-  </section>
+    </article>
 
-  <!-- ── Showcase ─────────────────────────────────────────── -->
-  <section class="section showcase" id="showcase">
-    <div class="wrap">
-      <p class="eyebrow"><span class="eyebrow__dot" aria-hidden="true"></span>The Interface</p>
-      <h2 class="section__title">Every screen, engineered.</h2>
-      <p class="section__lede">
-        Swipe through the app. Deep OLED black, neon signal, and data as the hero.
-      </p>
-    </div>
-
-    <div class="rail" role="group" aria-label="App screenshots — scroll horizontally">
-      <ul class="rail__track">
-
-        <li class="rail__item">
-          <div class="device">
-            <div class="device__frame">
-              <span class="device__btn device__btn--action" aria-hidden="true"></span>
-              <span class="device__btn device__btn--vol-up" aria-hidden="true"></span>
-              <span class="device__btn device__btn--vol-dn" aria-hidden="true"></span>
-              <span class="device__btn device__btn--power" aria-hidden="true"></span>
+    <article class="feature">
+      <div class="feature__device">
+        <div class="device">
+          <div class="device__body">
+            <span class="device__btn device__btn--action" aria-hidden="true"></span>
+            <span class="device__btn device__btn--vol-up" aria-hidden="true"></span>
+            <span class="device__btn device__btn--vol-dn" aria-hidden="true"></span>
+            <span class="device__btn device__btn--power" aria-hidden="true"></span>
+            <div class="device__bezel">
               <div class="device__screen">
-                <img src="assets/img/screens/scan.jpg" loading="lazy" decoding="async" width="900" height="1955"
-                     alt="Body Scan screen: three progress photos analysed into a physique score of 83 out of 100 with a 13 percent body-fat estimate and written strong points.">
+                <img src="assets/img/screens/home.jpg" width="900" height="1955" loading="lazy" decoding="async"
+                     alt="Dashboard showing a physique score of 76 and a body fat estimate of 12 to 16 percent.">
                 <span class="device__island" aria-hidden="true"></span>
-                <span class="device__glare" aria-hidden="true"></span>
               </div>
             </div>
+            <span class="device__sheen" aria-hidden="true"></span>
           </div>
-          <div class="rail__caption">
-            <h3>Body Scan</h3>
-            <p>Front, side and back photos become a high-confidence physique rating — with the reasoning written out.</p>
-          </div>
-        </li>
-
-        <li class="rail__item">
-          <div class="device">
-            <div class="device__frame">
-              <span class="device__btn device__btn--action" aria-hidden="true"></span>
-              <span class="device__btn device__btn--vol-up" aria-hidden="true"></span>
-              <span class="device__btn device__btn--vol-dn" aria-hidden="true"></span>
-              <span class="device__btn device__btn--power" aria-hidden="true"></span>
-              <div class="device__screen">
-                <img src="assets/img/screens/analytics.jpg" loading="lazy" decoding="async" width="900" height="1955"
-                     alt="Analytics screen showing today, this week and this month volume totals, a streak counter, and a volume-over-time chart.">
-                <span class="device__island" aria-hidden="true"></span>
-                <span class="device__glare" aria-hidden="true"></span>
-              </div>
-            </div>
-          </div>
-          <div class="rail__caption">
-            <h3>Analytics</h3>
-            <p>Chronicle every pound moved. Volume trends by day, week, month — plus prediction.</p>
-          </div>
-        </li>
-
-        <li class="rail__item">
-          <div class="device">
-            <div class="device__frame">
-              <span class="device__btn device__btn--action" aria-hidden="true"></span>
-              <span class="device__btn device__btn--vol-up" aria-hidden="true"></span>
-              <span class="device__btn device__btn--vol-dn" aria-hidden="true"></span>
-              <span class="device__btn device__btn--power" aria-hidden="true"></span>
-              <div class="device__screen">
-                <img src="assets/img/screens/coach.jpg" loading="lazy" decoding="async" width="900" height="1955"
-                     alt="AI Coach chat grounded in your data, reviewing the week's bench sessions and suggesting progressive overload targets.">
-                <span class="device__island" aria-hidden="true"></span>
-                <span class="device__glare" aria-hidden="true"></span>
-              </div>
-            </div>
-          </div>
-          <div class="rail__caption">
-            <h3>AI Coach</h3>
-            <p>Grounded in your data. It cites your actual sessions, then tells you what to lift next.</p>
-          </div>
-        </li>
-
-        <li class="rail__item">
-          <div class="device">
-            <div class="device__frame">
-              <span class="device__btn device__btn--action" aria-hidden="true"></span>
-              <span class="device__btn device__btn--vol-up" aria-hidden="true"></span>
-              <span class="device__btn device__btn--vol-dn" aria-hidden="true"></span>
-              <span class="device__btn device__btn--power" aria-hidden="true"></span>
-              <div class="device__screen">
-                <img src="assets/img/screens/muscles.jpg" loading="lazy" decoding="async" width="900" height="1955"
-                     alt="Muscles worked screen with a rotatable 3D body model highlighting trained groups, and most- and least-trained lists.">
-                <span class="device__island" aria-hidden="true"></span>
-                <span class="device__glare" aria-hidden="true"></span>
-              </div>
-            </div>
-          </div>
-          <div class="rail__caption">
-            <h3>Muscle Map</h3>
-            <p>A rotatable 3D model. Brighter means more volume — imbalances surface instantly.</p>
-          </div>
-        </li>
-
-        <li class="rail__item">
-          <div class="device">
-            <div class="device__frame">
-              <span class="device__btn device__btn--action" aria-hidden="true"></span>
-              <span class="device__btn device__btn--vol-up" aria-hidden="true"></span>
-              <span class="device__btn device__btn--vol-dn" aria-hidden="true"></span>
-              <span class="device__btn device__btn--power" aria-hidden="true"></span>
-              <div class="device__screen">
-                <img src="assets/img/screens/home.jpg" loading="lazy" decoding="async" width="900" height="1955"
-                     alt="Home dashboard with the day's workout, nutrition targets, streak and weekly volume.">
-                <span class="device__island" aria-hidden="true"></span>
-                <span class="device__glare" aria-hidden="true"></span>
-              </div>
-            </div>
-          </div>
-          <div class="rail__caption">
-            <h3>Daily Command</h3>
-            <p>Scan, streak, volume, workout and nutrition — the whole day on one screen.</p>
-          </div>
-        </li>
-
-      </ul>
-    </div>
-
-    <p class="rail__hint" aria-hidden="true">Swipe to explore →</p>
-  </section>
-
-  <!-- ── Capabilities ─────────────────────────────────────── -->
-  <section class="section" id="capabilities">
-    <div class="wrap">
-      <p class="eyebrow"><span class="eyebrow__dot" aria-hidden="true"></span>System Capabilities</p>
-      <h2 class="section__title">Superior analytics for superior athletes.</h2>
-      <p class="section__lede">Eliminating guesswork through precision scanning and neural-net coaching.</p>
-
-      <ul class="cards">
-        <li class="card">
-          <span class="card__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="6" y="6" width="12" height="12" rx="2.5"/>
-              <path d="M9.5 2.5V6M14.5 2.5V6M9.5 18v3.5M14.5 18v3.5M2.5 9.5H6M2.5 14.5H6M18 9.5h3.5M18 14.5h3.5"/>
-            </svg>
-          </span>
-          <h3>Physique Intelligence</h3>
-          <p>Your coach doesn't just track reps — it reads the biomechanical stress of every session and recommends the exact load.</p>
-        </li>
-
-        <li class="card">
-          <span class="card__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 2.5 3.5 7.25v9.5L12 21.5l8.5-4.75v-9.5L12 2.5Z"/>
-              <path d="M3.5 7.25 12 12l8.5-4.75M12 12v9.5"/>
-            </svg>
-          </span>
-          <h3>3D Volume Mapping</h3>
-          <p>Identify imbalances with volume mapped across every muscle group, rendered on a model you can rotate.</p>
-        </li>
-
-        <li class="card">
-          <span class="card__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>
-            </svg>
-          </span>
-          <h3>Total Tonnage</h3>
-          <p>Chronicle every pound moved. Visualise trends by week, month or year and predict where you land next.</p>
-        </li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- ── Calibration ──────────────────────────────────────── -->
-  <section class="section section--alt" id="calibration">
-    <div class="wrap split">
-
-      <div class="split__copy">
-        <p class="eyebrow"><span class="eyebrow__dot" aria-hidden="true"></span>The Science</p>
-        <h2 class="section__title">Honest calibration.<br>No flattery.</h2>
-
-        <ul class="points">
-          <li>
-            <h3>Data-forward approach</h3>
-            <p>Computer vision trained on professional athletic datasets returns a high-confidence physique rating — not a generic fitness score.</p>
-          </li>
-          <li>
-            <h3>Precision UI</h3>
-            <p>Minimalist typography keeps the data as the hero. No clutter, no distractions, no vanity metrics.</p>
-          </li>
-        </ul>
+        </div>
       </div>
-
-      <div class="split__aside">
-        <figure class="readout">
-          <figcaption class="readout__head">
-            <span class="readout__label">Neural physique estimate</span>
-            <span class="chip">High confidence</span>
-          </figcaption>
-          <p class="readout__score">83<span class="readout__unit">/100</span></p>
-          <div class="meter" role="img" aria-label="Physique estimate: 83 out of 100">
-            <span class="meter__fill" style="--pct:83%"></span>
-          </div>
-          <blockquote class="readout__quote">
-            “Athletic build with strong V-taper. Chest and deltoid separation is emerging.
-            Maintain current surplus to optimise muscle mass accrual.”
-          </blockquote>
-        </figure>
+      <div class="feature__label">
+        <span class="feature__num" aria-hidden="true">02</span>
+        <h2>Body Fat Percentage</h2>
       </div>
+    </article>
 
-    </div>
+    <article class="feature">
+      <div class="feature__device">
+        <div class="device">
+          <div class="device__body">
+            <span class="device__btn device__btn--action" aria-hidden="true"></span>
+            <span class="device__btn device__btn--vol-up" aria-hidden="true"></span>
+            <span class="device__btn device__btn--vol-dn" aria-hidden="true"></span>
+            <span class="device__btn device__btn--power" aria-hidden="true"></span>
+            <div class="device__bezel">
+              <div class="device__screen">
+                <img src="assets/img/screens/coach.jpg" width="900" height="1955" loading="lazy" decoding="async"
+                     alt="AI coach reviewing the week's sessions and setting the next targets.">
+                <span class="device__island" aria-hidden="true"></span>
+              </div>
+            </div>
+            <span class="device__sheen" aria-hidden="true"></span>
+          </div>
+        </div>
+      </div>
+      <div class="feature__label">
+        <span class="feature__num" aria-hidden="true">03</span>
+        <h2>Personalized Plan</h2>
+      </div>
+    </article>
+
   </section>
 
-  <!-- ── Tiers ────────────────────────────────────────────── -->
-  <section class="section" id="tiers">
-    <div class="wrap">
-      <p class="eyebrow"><span class="eyebrow__dot" aria-hidden="true"></span>Ranks</p>
-      <h2 class="section__title">Enter the tiers.</h2>
-      <p class="section__lede">Your physique is your passport. Earn your status through verified volume.</p>
-
-      <ol class="tiers">
-        <li class="tier tier--bronze">
-          <p class="tier__name">Bronze</p>
-          <p class="tier__status">Initiation status</p>
-          <p class="tier__req">100k<span>lb</span></p>
-        </li>
-        <li class="tier tier--silver">
-          <p class="tier__name">Silver</p>
-          <p class="tier__status">Ascendant</p>
-          <p class="tier__req">500k<span>lb</span></p>
-        </li>
-        <li class="tier tier--gold">
-          <p class="tier__name">Gold</p>
-          <p class="tier__status">Elite signal</p>
-          <p class="tier__req">1M<span>lb</span></p>
-        </li>
-        <li class="tier tier--platinum">
-          <p class="tier__name">Platinum</p>
-          <p class="tier__status">Titanic class</p>
-          <p class="tier__req">5M<span>lb</span></p>
-        </li>
-      </ol>
-    </div>
-  </section>
-
-  <!-- ── Final CTA ────────────────────────────────────────── -->
-  <section class="section cta">
+  <!-- ── Closing CTA ──────────────────────────────────────── -->
+  <section class="cta">
     <div class="cta__glow" aria-hidden="true"></div>
     <div class="wrap cta__inner">
-      <img class="cta__mark" src="assets/img/logo-mark.png" alt="" width="512" height="389" loading="lazy" decoding="async">
-      <h2 class="section__title">The iron signal awaits.</h2>
-      <p class="section__lede">
-        Stop guessing. Start measuring. Join the ranks of high-performance athletes
-        using CHIZZL to sculpt their future.
-      </p>
-
-      <div class="cta__actions">
-        <a class="appstore is-locked"
-           role="link"
-           aria-disabled="true"
-           tabindex="-1"
-           data-appstore
-           aria-label="Download on the App Store — coming soon">
-          <svg class="appstore__glyph" viewBox="0 0 22.773 22.773" aria-hidden="true" focusable="false">
-            <path d="M15.769 0h.162c.13 1.606-.483 2.806-1.228 3.675-.731.863-1.732 1.7-3.351 1.573-.108-1.583.506-2.694 1.25-3.561C13.292.879 14.557.1 15.769 0zM20.67 16.716v.045c-.455 1.378-1.104 2.559-1.896 3.655-.723.995-1.609 2.334-3.191 2.334-1.367 0-2.275-.879-3.676-.903-1.482-.024-2.297.735-3.652.926h-.462c-.995-.144-1.798-.932-2.383-1.642-1.725-2.098-3.058-4.808-3.306-8.276v-1.019c.105-2.482 1.311-4.5 2.914-5.478.846-.52 2.009-.963 3.304-.765.555.086 1.122.276 1.619.464.471.181 1.06.502 1.618.485.378-.011.754-.208 1.135-.347 1.116-.403 2.21-.865 3.652-.648 1.733.262 2.963 1.032 3.723 2.22-1.466.933-2.625 2.339-2.427 4.74.176 1.673 1.462 2.872 3.146 3.58z"/>
-          </svg>
-          <span class="appstore__text">
-            <span class="appstore__sub">Download on the</span>
-            <span class="appstore__main">App Store</span>
-          </span>
-        </a>
-      </div>
-
+      <a class="appstore is-locked"
+         role="link" aria-disabled="true" tabindex="-1" data-appstore
+         aria-label="Download on the App Store — coming soon">
+        <svg class="appstore__glyph" viewBox="0 0 22.773 22.773" aria-hidden="true" focusable="false">
+          <path d="M15.769 0h.162c.13 1.606-.483 2.806-1.228 3.675-.731.863-1.732 1.7-3.351 1.573-.108-1.583.506-2.694 1.25-3.561C13.292.879 14.557.1 15.769 0zM20.67 16.716v.045c-.455 1.378-1.104 2.559-1.896 3.655-.723.995-1.609 2.334-3.191 2.334-1.367 0-2.275-.879-3.676-.903-1.482-.024-2.297.735-3.652.926h-.462c-.995-.144-1.798-.932-2.383-1.642-1.725-2.098-3.058-4.808-3.306-8.276v-1.019c.105-2.482 1.311-4.5 2.914-5.478.846-.52 2.009-.963 3.304-.765.555.086 1.122.276 1.619.464.471.181 1.06.502 1.618.485.378-.011.754-.208 1.135-.347 1.116-.403 2.21-.865 3.652-.648 1.733.262 2.963 1.032 3.723 2.22-1.466.933-2.625 2.339-2.427 4.74.176 1.673 1.462 2.872 3.146 3.58z"/>
+        </svg>
+        <span class="appstore__text">
+          <span class="appstore__sub">Download on the</span>
+          <span class="appstore__main">App Store</span>
+        </span>
+      </a>
       <p class="cta__meta" data-appstore-note>
         <span class="pill">Coming soon</span>
-        Requires iPhone. Android under evaluation.
+        Requires iPhone.
       </p>
     </div>
   </section>
@@ -420,13 +184,12 @@
 
 <footer class="site-footer">
   <div class="wrap site-footer__inner">
-    <a class="brand" href="#top" aria-label="CHIZZL home">
-      <img class="brand__mark" src="assets/img/logo-mark.png" alt="" width="512" height="389" loading="lazy" decoding="async">
-      <span class="brand__word">CHIZZL</span>
+    <a class="brand" href="#top" aria-label="CHIZZL AI home">
+      <img class="brand__mark" src="assets/img/logo-mark.png" alt="" width="495" height="720" loading="lazy" decoding="async">
+      <span class="brand__word">CHIZZL<span class="brand__ai">AI</span></span>
     </a>
-    <p class="site-footer__tag">Engineered for supremacy • Built for results</p>
     <p class="site-footer__legal">
-      © <span data-year>2026</span> CHIZZL Labs. Apple and the Apple logo are trademarks of Apple Inc.
+      © <span data-year>2026</span> CHIZZL AI. Apple and the Apple logo are trademarks of Apple Inc.
     </p>
   </div>
 </footer>

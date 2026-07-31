@@ -1,7 +1,9 @@
-# CHIZZL — Landing Page
+# CHIZZL AI — Landing Page
 
-Static, mobile-first landing page for the CHIZZL iOS app. No build step, no
+Static, phone-first landing page for the CHIZZL AI iOS app. No build step, no
 dependencies, no third-party requests — open `index.html` and it runs.
+
+Live at **https://mgrugan.github.io/chizzl-website/**
 
 ## Going live on the App Store
 
@@ -17,43 +19,61 @@ That single change:
 - points every `[data-appstore]` badge at the URL
 - removes the `is-locked` state (restores hover, focus and pointer events)
 - clears the `aria-disabled` / `tabindex="-1"` accessibility lock
-- strips the "Coming soon" pills from the surrounding notes
+- strips the "Coming soon" pills
 
-No markup edits required. Leaving it as `''` keeps the pre-launch state.
+No markup edits required. Leaving it as `''` keeps the pre-launch state. Push to
+the default branch and Pages redeploys automatically.
 
 ## Structure
 
 ```
 index.html                  single page
+.github/workflows/pages.yml GitHub Pages deploy
 assets/
-  css/styles.css            design system + layout
+  css/styles.css            design system + layout + device mockup
   css/fonts.css             @font-face declarations
   fonts/*.woff2             self-hosted Space Grotesk + Manrope
   js/main.js                App Store link switch, footer year
-  img/logo-mark.png         Spartan emblem (background keyed out)
-  img/logo-full.png         emblem + wordmark
+  img/logo-mark.png         Spartan mark
+  img/og-image.png          social card
   img/screens/*.jpg         in-app screenshots, uniform 900×1955
 ```
 
-## Notes
+## The iPhone mockups
 
-**iPhone mockups** are built in CSS (`.device` in `styles.css`), not baked into
-images. The frame, Dynamic Island, side buttons and screen glare are all
-elements; the screenshot sits underneath. To swap a screenshot, drop in a new
-file at the same aspect ratio — the frame adapts. Scale any mockup by changing
-its `--pw` (phone width); every other dimension is derived from it.
+Built entirely in CSS (`.device` in `styles.css`) — nothing is baked into an
+image. The frame is three nested layers: a polished titanium rail, a black
+bezel, then the screen, with the Dynamic Island, side buttons and glass sheen as
+separate elements.
+
+Every dimension derives from a single `--pw` (phone width) custom property, so a
+mockup rescales by changing one value and nothing drifts out of proportion.
+
+Two details worth preserving if you edit it:
+
+- The rail uses a **conic** gradient, not a linear one. Light has to travel
+  around the frame or it reads flat. The specular bands deliberately stop short
+  of white — a blown-out rail looks like a glowing outline instead of metal.
+- The glass sheen is kept very faint on purpose. The screenshot has to stay
+  readable; that is the entire point of the mockup.
 
 Screenshots are normalised to 1320×2868 (iPhone 16 Pro Max native) before
 downscaling, so the Dynamic Island lands in the gap between the status-bar clock
-and the battery icons, exactly as it does on a real device.
+and the battery icons, exactly as it does on a real device. To swap one, drop in
+a file at the same aspect ratio.
+
+`analytics.jpg` and `muscles.jpg` are not currently referenced — they are kept
+so screens can be swapped without re-exporting.
+
+## Notes
 
 **Design tokens** in `:root` come from the project's "Obsidian Kinetic" design
-system: dark-first surfaces, hairline borders instead of shadows, a 5% film-grain
-overlay, Space Grotesk for display and Manrope for body.
+system: dark-first surfaces, hairline borders instead of shadows, a 5%
+film-grain overlay, Space Grotesk for display and Manrope for body.
 
-**Responsive behaviour** — the screenshot showcase is a snap-scrolling rail on
-phones and a wider rail on desktop. Layout is verified free of horizontal
-overflow from 320px up. Honours `prefers-reduced-motion` and `prefers-contrast`.
+**Responsive** — one device per feature, stacked on phones and alternating
+left/right from 900px. Verified free of horizontal overflow from 320px up.
+Honours `prefers-reduced-motion` and `prefers-contrast`.
 
 ## Credits
 
