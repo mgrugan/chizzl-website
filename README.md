@@ -71,13 +71,33 @@ header cannot be configured. Without versioned asset URLs a returning visitor
 can load fresh HTML against a still-cached stylesheet and get a broken hybrid
 page — new markup, old layout rules.
 
-So `index.html` references its CSS and JS as `?v=dev`, and the Pages workflow
-rewrites that to the commit SHA before uploading. The HTML and the assets it
-depends on therefore always change together.
+So the CSS and JS URLs in `index.html` carry a `?v=<hash>` derived from the
+asset bytes. **After editing any stylesheet or script, re-stamp and commit:**
 
-Keep the `?v=dev` suffix on any stylesheet or script added to `index.html`; the
-workflow stamps whatever it finds. Locally `?v=dev` is just an ignored query
-string, so nothing special is needed to develop.
+```sh
+python3 tools/stamp.py
+```
+
+The version only moves when the assets actually change, so caches are not
+busted needlessly. The Pages workflow re-runs the stamper and fails the build if
+the committed `index.html` is out of date.
+
+Note this is stamped at *commit* time rather than in the workflow. Two things
+publish this repo — the Pages Actions workflow and GitHub's legacy branch
+builder, which both fire on every push (see below) — and the legacy one serves
+the repo verbatim, so anything done only inside the workflow gets skipped
+whenever that builder wins.
+
+### Two builders
+
+`Settings → Pages → Build and deployment` is still set to *Deploy from a
+branch*, so GitHub's built-in builder publishes on every push alongside
+`pages.yml`. They race, and whichever finishes last wins. Because both now serve
+identical committed bytes this is harmless, but switching the source to *GitHub
+Actions* would remove the duplicate build and make `pages.yml` authoritative.
+
+To add a new stamped asset, list it in `ASSETS` in `tools/stamp.py` and
+reference it in `index.html`.
 
 ## Notes
 
