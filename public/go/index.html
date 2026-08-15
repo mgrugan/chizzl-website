@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Opening the App Store…</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#000000">
+<meta name="color-scheme" content="dark">
+
+<!--
+  Instant App Store redirect. Linked from bios and stories so a tap skips the
+  landing page entirely.
+
+  Everything is inline and this file loads no fonts, no CSS, no JS bundle and
+  no images, so the redirect fires on the first paint of the first and only
+  request. The script sits above all markup on purpose: it runs while the body
+  is still parsing.
+
+  The <noscript> meta refresh is the JS-off path. It is deliberately NOT a
+  plain <meta http-equiv="refresh"> in the head — that would race the script
+  and, inside Instagram, clobber the custom-scheme escape with an
+  apps.apple.com navigation the webview then refuses.
+-->
+<noscript><meta http-equiv="refresh" content="0;url=https://apps.apple.com/app/chizzl-ai/id6790546338"></noscript>
+
+<script>
+(function () {
+  var STORE = 'https://apps.apple.com/app/chizzl-ai/id6790546338';
+  var ua = navigator.userAgent || '';
+  var iOS = /iPad|iPhone|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+  var android = /Android/.test(ua);
+  var instagram = /Instagram/i.test(ua);
+  var facebook = /FBAN|FBAV|FB_IAB|FBIOS|Messenger/i.test(ua);
+  var inApp = instagram || facebook;
+
+  // Mirrors src/lib/inAppBrowser.ts. Kept as a copy rather than an import
+  // because importing anything would cost the round trip this page exists to
+  // avoid. If the escape schemes change, change them in both places.
+  function target() {
+    if (!inApp) return STORE;
+    if (android) return 'intent://' + STORE.replace(/^[a-z][a-z0-9+.-]*:\/\//i, '') + '#Intent;scheme=https;end';
+    if (instagram) return 'instagram://extbrowser/?url=' + encodeURIComponent(STORE);
+    if (facebook) return 'x-safari-' + STORE;
+    return STORE;
+  }
+
+  var firedAt = 0;
+
+  function go() {
+    firedAt = Date.now();
+    var url = target();
+    // Facebook's webview only honours the x-safari- prefix through window.open.
+    if (inApp && facebook && iOS) { window.open(url, '_blank'); return; }
+    // replace(), not href: the store must not become a Back-button trap.
+    if (url === STORE) location.replace(url); else location.href = url;
+  }
+
+  // A return trip lands here again — after Back from the store, or when the
+  // host app restores the tab. Redirecting a second time would pin the user
+  // in a loop they cannot Back out of, so show the card instead.
+  var returning = false;
+  try { returning = sessionStorage.getItem('chizzl-go') === '1'; sessionStorage.setItem('chizzl-go', '1'); } catch (e) {}
+
+  var settled = false;
+  function settle() { settled = true; }
+  ['visibilitychange', 'pagehide', 'blur'].forEach(function (e) {
+    document.addEventListener(e, settle, { once: true });
+    window.addEventListener(e, settle, { once: true });
+  });
+
+  var revealed = false;
+  function reveal() {
+    if (settled || revealed) return;
+    var el = document.getElementById('card');
+    if (!el) return;
+    el.hidden = false;
+    revealed = true;
+    // iOS discards custom-scheme navigation with no user gesture behind it,
+    // which is exactly the case on a cold page load. So the next tap anywhere
+    // on the page retries the escape with a real gesture attached.
+    if (inApp) document.addEventListener('click', function once() {
+      document.removeEventListener('click', once); go();
+    });
+  }
+
+  // Being back on this page after the redirect already fired means the handoff
+  // did not stick, or the visitor came back from the store. Either way the
+  // spinner is now lying, so replace it with something tappable. This is the
+  // bfcache path too: after Back, iOS restores the page frozen mid-redirect
+  // and never re-runs the script, so without this the spinner would sit there
+  // forever.
+  function backHere() {
+    if (!firedAt) return;
+    settled = false;
+    ready(reveal);
+  }
+  window.addEventListener('pageshow', function (e) { if (e.persisted) backHere(); });
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'visible' && Date.now() - firedAt > 700) backHere();
+  });
+
+  function ready(fn) {
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn);
+    else fn();
+  }
+
+  // Seams are installed before the redirect fires, not after: go() hands the
+  // document to another app, and anything queued behind it may never run.
+  window.__chizzlGo = go;
+  window.__chizzlTarget = target;
+
+  if (returning) {
+    ready(reveal);
+  } else {
+    // Redirect after the parse, not from inside the head. Firing a navigation
+    // mid-parse truncates the document, and the fallback card below is then
+    // never built — which is exactly the markup you need when the redirect is
+    // the thing that failed. This file is a few KB and pulls in no fonts, CSS
+    // or images, so waiting for DOMContentLoaded costs a fraction of a
+    // millisecond and buys a guaranteed escape hatch.
+    ready(function () {
+      go();
+      // In-app webviews swallow the escape silently. A normal browser has
+      // already left by now, so a longer wait there just avoids flashing the
+      // card at someone on a slow connection.
+      setTimeout(reveal, inApp ? 1400 : 2500);
+    });
+  }
+})();
+</script>
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0; background: #000; color: #F4F5F6;
+    font: 400 15px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px calc(20px + env(safe-area-inset-left)) calc(24px + env(safe-area-inset-bottom));
+    text-align: center;
+  }
+  .wrap { width: 100%; max-width: 360px; }
+  .mark {
+    font-size: 13px; font-weight: 300; letter-spacing: .34em;
+    text-transform: uppercase; color: #6E7378;
+  }
+  /* Shown only while the redirect is in flight. */
+  .dots { margin-top: 26px; display: flex; gap: 7px; justify-content: center; }
+  .dots i {
+    width: 6px; height: 6px; border-radius: 50%; background: #27E08A;
+    animation: p 1.05s ease-in-out infinite;
+  }
+  .dots i:nth-child(2) { animation-delay: .16s }
+  .dots i:nth-child(3) { animation-delay: .32s }
+  @keyframes p { 0%,100% { opacity:.2; transform:scale(.8) } 50% { opacity:1; transform:scale(1) } }
+  @media (prefers-reduced-motion: reduce) { .dots i { animation: none; opacity: .6 } }
+
+  h1 { margin: 22px 0 0; font-size: 21px; font-weight: 300; letter-spacing: -.01em; }
+  p  { margin: 10px 0 0; font-size: 14px; color: #9AA0A6; }
+  a.btn {
+    display: block; margin-top: 22px; padding: 15px 20px; border-radius: 12px;
+    background: #27E08A; color: #04150C; font-weight: 600; font-size: 15px;
+    text-decoration: none;
+  }
+  a.alt { display: inline-block; margin-top: 16px; font-size: 13px; color: #6E7378; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="mark">Chizzl AI</div>
+
+    <div class="dots" id="dots" aria-label="Opening the App Store"><i></i><i></i><i></i></div>
+
+    <div id="card" hidden>
+      <h1>Open the App Store</h1>
+      <p id="why">Tap below to finish opening Chizzl AI.</p>
+      <a class="btn" id="cta" href="https://apps.apple.com/app/chizzl-ai/id6790546338" rel="noopener">Get Chizzl AI</a>
+      <a class="alt" href="/chizzl-website/">Visit the site instead</a>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    var card = document.getElementById('card');
+    if (!card) return;
+    var obs = new MutationObserver(function () {
+      if (!card.hidden) { var d = document.getElementById('dots'); if (d) d.hidden = true; }
+    });
+    obs.observe(card, { attributes: true, attributeFilter: ['hidden'] });
+
+    var ua = navigator.userAgent || '';
+    var ig = /Instagram/i.test(ua), fb = /FBAN|FBAV|FB_IAB|FBIOS|Messenger/i.test(ua);
+    if (ig || fb) {
+      var iOS = /iPad|iPhone|iPod/.test(ua);
+      document.getElementById('why').innerHTML =
+        (ig ? 'Instagram' : 'Facebook') + " can't open App Store links in its own browser. " +
+        'Tap below, or use <b>' + (iOS ? '•••' : '⋮') + '</b> in the corner then <b>Open in browser</b>.';
+      document.getElementById('cta').addEventListener('click', function (e) {
+        e.preventDefault(); window.__chizzlGo && window.__chizzlGo();
+      });
+    }
+  })();
+  </script>
+</body>
+</html>

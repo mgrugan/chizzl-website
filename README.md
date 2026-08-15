@@ -16,16 +16,64 @@ npm run build    # -> dist/
 `vite.config.ts` sets `base: '/chizzl-website/'` because Project Pages serve from
 a subpath. Files in `public/assets/` are referenced with that prefix.
 
-## Going live on the App Store
+## The App Store link
 
-Every badge is inert until one constant is set, in `src/config.ts`:
+Every badge on the page reads one constant, in `src/config.ts`:
 
 ```ts
-export const APP_STORE_URL = 'https://apps.apple.com/app/id0000000000';
+export const APP_STORE_URL = 'https://apps.apple.com/app/chizzl-ai/id6790546338';
 ```
 
-Setting it turns every badge into a real link and activates the in-app browser
-escape described below. Leaving it empty keeps the pre-launch state.
+It is live. Emptying the string puts every badge back into the inert
+pre-launch state and switches off the in-app browser escape below.
+
+The path carries **no country code**. Apple then resolves each visitor to their
+own storefront; a hard-coded `/us/` shows everyone outside the US a "not
+available in your country" interstitial instead of the listing.
+
+`index.html` also carries `<meta name="apple-itunes-app" content="app-id=6790546338">`,
+which is what makes Safari on iOS show its native Smart App Banner above the
+page — a second route to the listing that costs nothing and does not depend on
+the visitor reaching a badge.
+
+## `/go/` — the instant redirect
+
+**https://mgrugan.github.io/chizzl-website/go/**
+
+For bio links, stories and DMs, where the landing page is a detour. It sends
+the visitor to the App Store with no tap and nothing to read.
+
+`public/go/index.html` is a standalone file that Vite copies through
+untouched. It loads **no fonts, no stylesheet, no JS bundle and no images** —
+one request, then the redirect. A Playwright check asserts that request count
+so a future edit cannot quietly add a second one.
+
+Three details it exists to get right:
+
+- **The redirect fires on `DOMContentLoaded`, not from inside `<head>`.** A
+  navigation fired mid-parse truncates the document, so the fallback card
+  never gets built — and that card is precisely what is needed when the
+  redirect is the thing that failed. The file is a few KB with nothing
+  external in it, so the wait is a fraction of a millisecond.
+- **`location.replace`, not `location.href`.** The store must not become a
+  Back-button trap: Back skips past `/go/` to wherever the visitor came from.
+- **Coming back is handled.** On iOS the App Store opens as an app while
+  Safari stays parked on this page, and a bfcache restore never re-runs the
+  script. Without `pageshow` and `visibilitychange` handling, the visitor
+  returns to a spinner that never resolves. They get a tappable button
+  instead.
+
+Inside Instagram or Facebook it runs the same escape as the badges (below),
+automatically. If iOS discards it for having no user gesture behind it — the
+usual outcome on a cold load — the card appears and **the next tap anywhere on
+the page** retries the escape with a real gesture attached.
+
+The escape schemes are duplicated from `src/lib/inAppBrowser.ts` rather than
+imported, because importing anything would cost the round trip the page exists
+to avoid. Change one, change the other.
+
+To make the whole site behave this way, point the root at it — but the landing
+page then stops existing for anyone, including people arriving from search.
 
 ## Instagram and Facebook in-app browsers
 

@@ -1,9 +1,16 @@
 /**
- * Paste the App Store URL here when the app goes live. Every badge on the
- * page activates, including the Instagram/Facebook webview escape.
- * Leave empty to keep the pre-launch state.
+ * The App Store URL. Every badge on the page reads this one constant,
+ * including the Instagram/Facebook webview escape. Emptying it puts the
+ * page back into the inert pre-launch state.
+ *
+ * No country code in the path on purpose: Apple then serves each visitor
+ * their own storefront. Hard-coding /us/ shows everyone else a
+ * "not available in your country" interstitial.
  */
-export const APP_STORE_URL = '';
+export const APP_STORE_URL = 'https://apps.apple.com/app/chizzl-ai/id6790546338';
+
+/** Numeric App Store ID, for Safari's Smart App Banner. */
+export const APP_STORE_ID = '6790546338';
 
 export const asset = (p: string) => `/chizzl-website/assets/${p}`;
 
