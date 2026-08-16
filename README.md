@@ -70,15 +70,23 @@ over IPv6:
 Then one CNAME so the `www` spelling works: host `www`, value
 `mgrugan.github.io`.
 
-**2. The domain itself.** `public/CNAME` holds `chizzl.co`, which is what
-registers the custom domain with Pages on each deploy — Settings › Pages shows
-it after the first one. Tick **Enforce HTTPS** there once the certificate has
-been issued, which takes a few minutes.
+**2. Repo settings.** Settings › Pages › Custom domain → `chizzl.co` → Save,
+then tick **Enforce HTTPS** once the certificate has been issued a few minutes
+later.
 
-Order matters, and the CNAME file is the switch: naming the custom domain
-before DNS resolves makes GitHub redirect `mgrugan.github.io/chizzl-website/`
-to a hostname that does not answer yet, which takes the site down until it
-does. Set the DNS records first and confirm they resolve.
+This step cannot be done from the repo. `public/CNAME` exists and deploys, but
+a CNAME file only registers the domain under the **legacy branch builder**;
+this repo publishes through the **Actions** workflow, where the custom domain
+lives in repository settings and the artifact's CNAME file is inert. The
+symptom when you assume otherwise is a deployed `/CNAME` that reads correctly
+while `github.io` refuses to redirect and `https://chizzl.co` keeps presenting
+GitHub's `*.github.io` certificate, so the handshake fails. The file is kept
+because it costs nothing and records the intended domain.
+
+Order matters: set the DNS records and confirm they resolve before naming the
+domain in settings. Doing it the other way round makes GitHub redirect
+`mgrugan.github.io/chizzl-website/` to a hostname that does not answer yet,
+which takes the site down until it does.
 
 GoDaddy specifics, since they cost an afternoon: the parking page is an A
 record on `@` displayed as **"WebsiteBuilder Site"** rather than an IP, and it
