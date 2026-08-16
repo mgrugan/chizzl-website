@@ -21,9 +21,11 @@ timed against DNS, and would break one of the two URLs in the meantime. A
 Playwright check loads the build at both mount points and asserts that every
 asset, font and image resolves.
 
-The two exceptions are `og:url`/`og:image` and `rel=canonical` in `index.html`,
-which point at `https://chizzl.co` absolutely — social scrapers do not resolve
-relative URLs against the page they fetched.
+The exceptions are `og:url`, `og:image` and `rel=canonical` in `index.html`.
+Those have to be absolute, because scrapers and search engines do not resolve
+relative URLs against the page they fetched. They currently point at the
+github.io URL and become `https://chizzl.co/...` once the domain resolves —
+see the go-live checklist below.
 
 ## The App Store link
 
@@ -73,6 +75,10 @@ Then one CNAME so the `www` spelling works: host `www`, value
 **2. Repo settings.** Settings › Pages › Custom domain → `chizzl.co` → Save.
 GitHub re-checks DNS and issues a certificate, usually within minutes. Tick
 **Enforce HTTPS** once that box stops being greyed out.
+
+**3. Then, in this repo.** Swap the three absolute tags in `index.html`
+(`og:url`, `og:image`, `rel=canonical`) over to `https://chizzl.co/...`. That
+is the whole code change.
 
 Order matters: set the DNS first. Naming the custom domain before DNS resolves
 makes GitHub redirect `mgrugan.github.io/chizzl-website/` to a hostname that
