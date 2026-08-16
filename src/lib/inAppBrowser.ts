@@ -23,13 +23,21 @@ export const isInstagram = (): boolean => /Instagram|Threads|Barcelona/i.test(UA
 
 export const isFacebook = (): boolean => /FBAN|FBAV|FB_IAB|FB4A|FBIOS|Messenger/i.test(UA);
 
-export const isInAppBrowser = (): boolean => isInstagram() || isFacebook();
+/**
+ * TikTok's webview. Its UA is inconsistent across builds and regions, so this
+ * matches the whole family: the ByteDance webview marker, the app's original
+ * name, and the two internal codenames that still ship in some locales.
+ */
+export const isTikTok = (): boolean =>
+  /BytedanceWebview|musical_ly|TikTok|Trill|aweme/i.test(UA);
 
-export type MetaApp = 'instagram' | 'facebook' | null;
+export const isInAppBrowser = (): boolean => isInstagram() || isFacebook() || isTikTok();
 
-/** Instagram wins: its UA can carry both signatures. */
-export const appName = (): MetaApp =>
-  isInstagram() ? 'instagram' : isFacebook() ? 'facebook' : null;
+export type InAppName = 'instagram' | 'facebook' | 'tiktok' | null;
+
+/** Instagram wins over Facebook: its UA can carry both signatures. */
+export const appName = (): InAppName =>
+  isInstagram() ? 'instagram' : isFacebook() ? 'facebook' : isTikTok() ? 'tiktok' : null;
 
 /** The URL that hands `url` to the system browser. Unchanged outside a webview. */
 export function buildEscapeUrl(url: string): string {
@@ -41,6 +49,13 @@ export function buildEscapeUrl(url: string): string {
 
   if (isAndroid()) {
     return `intent://${url.replace(/^[a-z][a-z0-9+.-]*:\/\//i, '')}#Intent;scheme=https;end`;
+  }
+  if (isTikTok()) {
+    // TikTok exposes no "open in the system browser" scheme the way Instagram
+    // does, so rather than escaping to Safari this asks iOS to open the App
+    // Store app directly. itms-apps:// is the store's own scheme, so it is
+    // handled by the OS rather than by the webview that is doing the blocking.
+    return url.replace(/^https?:/i, 'itms-apps:');
   }
   if (isInstagram()) {
     // Instagram intercepts this and opens Safari. The x-safari- prefix that

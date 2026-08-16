@@ -47,9 +47,12 @@
   var ua = navigator.userAgent || '';
   var iOS = /iPad|iPhone|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
   var android = /Android/.test(ua);
-  var instagram = /Instagram/i.test(ua);
-  var facebook = /FBAN|FBAV|FB_IAB|FBIOS|Messenger/i.test(ua);
-  var inApp = instagram || facebook;
+  // Kept in step with src/lib/inAppBrowser.ts — Threads shares Instagram's
+  // webview and escape hatch, and TikTok ships two internal codenames.
+  var instagram = /Instagram|Threads|Barcelona/i.test(ua);
+  var facebook = /FBAN|FBAV|FB_IAB|FB4A|FBIOS|Messenger/i.test(ua);
+  var tiktok = /BytedanceWebview|musical_ly|TikTok|Trill|aweme/i.test(ua);
+  var inApp = instagram || facebook || tiktok;
 
   // Mirrors src/lib/inAppBrowser.ts. Kept as a copy rather than an import
   // because importing anything would cost the round trip this page exists to
@@ -57,6 +60,10 @@
   function target() {
     if (!inApp) return STORE;
     if (android) return 'intent://' + STORE.replace(/^[a-z][a-z0-9+.-]*:\/\//i, '') + '#Intent;scheme=https;end';
+    // TikTok has no escape-to-browser scheme, so open the App Store app
+    // directly through the store's own scheme, which the OS handles rather
+    // than the webview doing the blocking.
+    if (tiktok) return STORE.replace(/^https?:/i, 'itms-apps:');
     if (instagram) return 'instagram://extbrowser/?url=' + encodeURIComponent(STORE);
     if (facebook) return 'x-safari-' + STORE;
     return STORE;
@@ -214,7 +221,7 @@
       <h1>Open the App Store</h1>
       <p id="why">Tap below to finish opening Chizzl AI.</p>
       <a class="btn" id="cta" href="https://apps.apple.com/app/chizzl-ai/id6790546338" rel="noopener">Get Chizzl AI</a>
-      <a class="alt" href="../">Visit the site instead</a>
+      <a class="alt" href="../?stay=1">Visit the site instead</a>
     </div>
   </div>
 
@@ -228,11 +235,14 @@
     obs.observe(card, { attributes: true, attributeFilter: ['hidden'] });
 
     var ua = navigator.userAgent || '';
-    var ig = /Instagram/i.test(ua), fb = /FBAN|FBAV|FB_IAB|FBIOS|Messenger/i.test(ua);
-    if (ig || fb) {
+    var ig = /Instagram|Threads|Barcelona/i.test(ua);
+    var fb = /FBAN|FBAV|FB_IAB|FB4A|FBIOS|Messenger/i.test(ua);
+    var tt = /BytedanceWebview|musical_ly|TikTok|Trill|aweme/i.test(ua);
+    if (ig || fb || tt) {
       var iOS = /iPad|iPhone|iPod/.test(ua);
       document.getElementById('why').innerHTML =
-        (ig ? 'Instagram' : 'Facebook') + " can't open App Store links in its own browser. " +
+        (ig ? 'Instagram' : fb ? 'Facebook' : 'TikTok') +
+        " can't open App Store links in its own browser. " +
         'Tap below, or use <b>' + (iOS ? '•••' : '⋮') + '</b> in the corner then <b>Open in browser</b>.';
       document.getElementById('cta').addEventListener('click', function (e) {
         e.preventDefault(); window.__chizzlGo && window.__chizzlGo();

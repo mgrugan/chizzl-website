@@ -194,7 +194,30 @@ Two limits worth knowing before promising anyone a payout:
   app work, not website work — and is also the only version accurate enough to
   pay commission on.
 
-## Instagram and Facebook in-app browsers
+## Social traffic never sees the landing page
+
+Anyone arriving inside Instagram, Threads, Facebook, Messenger or TikTok is
+redirected off the root straight to `/go/`, and from there to the App Store.
+They followed a bio link to download the app, and that webview is also where
+App Store links get blocked, so the handling in `/go/` is what they need — not
+a page to read.
+
+The detection is an inline script at the top of `index.html`, above the bundle,
+so it fires on first paint with no React and no fonts fetched first. Every
+other context — Safari, Chrome, desktop, search crawlers — falls through to the
+normal page.
+
+`?stay=1` opts out and is remembered for the session. The "Visit the site
+instead" link on `/go/` carries it, and has to: without it that link lands on
+the root, gets detected, and is sent back to `/go/` forever.
+
+The UA list is duplicated between `index.html`, `public/go/index.html` and
+`src/lib/inAppBrowser.ts`, for the same reason the escape schemes are — the
+first two must not wait on a bundle. Change one, change all three. A test
+walks every app on both platforms to catch drift; that is what caught `/go/`
+matching only `Instagram` while the module also matched Threads.
+
+## Instagram, Facebook and TikTok in-app browsers
 
 Meta's apps render links in an embedded webview that refuses App Store links.
 A tap does nothing at all, with no error. `src/lib/inAppBrowser.ts` handles it:
@@ -204,7 +227,13 @@ A tap does nothing at all, with no error. `src/lib/inAppBrowser.ts` handles it:
 | Any normal browser | The badge stays a plain `<a href>` and navigates natively. Nothing is intercepted. |
 | Instagram / Threads, iOS | `location.href = 'instagram://extbrowser/?url=' + encodeURIComponent(url)` |
 | Facebook / Messenger, iOS | `window.open('x-safari-' + url, '_blank')` |
-| Android, any Meta app | `location.href = 'intent://<url-without-scheme>#Intent;scheme=https;end'` |
+| TikTok, iOS | `location.href = url.replace(/^https?:/, 'itms-apps:')` |
+| Android, any of them | `location.href = 'intent://<url-without-scheme>#Intent;scheme=https;end'` |
+
+TikTok is the odd one: it publishes no escape-to-browser scheme, so instead of
+routing through Safari it asks iOS to open the App Store app directly with the
+store's own `itms-apps://` scheme, which the OS handles rather than the webview
+that is doing the blocking.
 
 Two details that matter:
 
@@ -219,6 +248,19 @@ Success is inferred from `visibilitychange` / `pagehide` / `blur`, since the
 page is backgrounded when the host app hands off. If none fires within 1.5s the
 escape was swallowed, and a sheet offers a retry, the manual route
 (tap the corner menu, then Open in browser), and a copy-link fallback.
+
+### The limit worth knowing
+
+A tap on a badge always carries a user gesture, so that path is reliable. The
+**automatic** redirect on `/go/` does not: iOS discards custom-scheme
+navigation with no gesture behind it, and a cold page load is exactly that, so
+the automatic escape frequently does not fire inside a webview. Nothing can
+make that a certainty on iOS.
+
+So `/go/` fires automatically, and makes the recovery immediate: the
+tap-anywhere retry is armed the instant the page loads rather than when the
+card appears, and the card follows at 900ms. Worst case is one tap, not a dead
+spinner.
 
 ## Design system
 

@@ -25,6 +25,37 @@
 <link rel="apple-touch-icon" href="./assets/img/apple-touch-icon.png">
 <link rel="preload" href="./assets/fonts/inter-var-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="./assets/fonts/manrope-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+<!--
+  Traffic arriving inside Instagram, Facebook, Messenger, Threads or TikTok
+  skips the landing page and goes straight to the App Store. Those visitors
+  came from a bio link to download the app, and the in-app webview is also
+  where App Store links are blocked, so the handling in /go/ is what they
+  need — not a page to read.
+
+  This sits above everything else and before the bundle so the redirect
+  happens on the first paint, with no React and no fonts fetched first.
+  Anywhere else — Safari, Chrome, desktop, search crawlers — falls straight
+  through and gets the normal page.
+
+  ?stay=1 is the escape hatch, set by the "Visit the site instead" link on
+  /go/. Without it that link would bounce back here and be redirected
+  again, forever. It is remembered for the session so navigating inside the
+  site does not re-trigger.
+-->
+<script>
+(function () {
+  var ua = navigator.userAgent || '';
+  if (!/Instagram|Threads|Barcelona|FBAN|FBAV|FB_IAB|FB4A|FBIOS|Messenger|BytedanceWebview|musical_ly|TikTok|Trill|aweme/i.test(ua)) return;
+  try {
+    if (/[?&]stay=1/.test(location.search)) { sessionStorage.setItem('chizzl-stay', '1'); return; }
+    if (sessionStorage.getItem('chizzl-stay') === '1') return;
+  } catch (e) {}
+  // replace(), so Back returns to the app the visitor came from rather than
+  // landing here and being redirected a second time.
+  location.replace('./go/' + (location.search || ''));
+})();
+</script>
 </head>
 <body>
 <div id="root"></div>
