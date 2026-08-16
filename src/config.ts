@@ -12,7 +12,30 @@ export const APP_STORE_URL = 'https://apps.apple.com/app/chizzl-ai/id6790546338'
 /** Numeric App Store ID, for Safari's Smart App Banner. */
 export const APP_STORE_ID = '6790546338';
 
-export const asset = (p: string) => `/chizzl-website/assets/${p}`;
+/**
+ * Apple provider token, from App Store Connect › App Analytics › Acquisition ›
+ * Campaigns (it is the `pt` in any link that page generates). Campaign codes
+ * are still recorded without it, so this stays optional and is simply omitted
+ * while empty.
+ */
+export const APPLE_PROVIDER_TOKEN = '';
+
+/**
+ * The store URL tagged with a campaign, so App Analytics can attribute the
+ * install. `campaign` becomes the `ct` value you read in the Campaigns table.
+ */
+export function storeUrl(campaign?: string): string {
+  if (!APP_STORE_URL) return '';
+  if (!campaign) return APP_STORE_URL;
+  const q = new URLSearchParams();
+  if (APPLE_PROVIDER_TOKEN) q.set('pt', APPLE_PROVIDER_TOKEN);
+  q.set('ct', campaign);
+  q.set('mt', '8');
+  return `${APP_STORE_URL}?${q}`;
+}
+
+/** Relative on purpose — see the base note in vite.config.ts. */
+export const asset = (p: string) => `./assets/${p}`;
 
 export const SCREENS = {
   scan: asset('img/screens/scan.jpg'),

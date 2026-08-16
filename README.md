@@ -3,7 +3,8 @@
 Landing page for the CHIZZL AI iOS app. React + Vite + Tailwind v4 + Motion,
 built against the design system in `DESIGN.md`.
 
-Live at **https://mgrugan.github.io/chizzl-website/**
+Live at **https://mgrugan.github.io/chizzl-website/**, moving to
+**https://chizzl.co**
 
 ## Develop
 
@@ -13,8 +14,16 @@ npm run dev      # local dev server
 npm run build    # -> dist/
 ```
 
-`vite.config.ts` sets `base: '/chizzl-website/'` because Project Pages serve from
-a subpath. Files in `public/assets/` are referenced with that prefix.
+`vite.config.ts` sets `base: './'`, so every asset URL is relative and the same
+build serves correctly from the Pages project subpath *and* from the apex of
+chizzl.co. That is deliberate: an absolute base would need a cutover commit
+timed against DNS, and would break one of the two URLs in the meantime. A
+Playwright check loads the build at both mount points and asserts that every
+asset, font and image resolves.
+
+The two exceptions are `og:url`/`og:image` and `rel=canonical` in `index.html`,
+which point at `https://chizzl.co` absolutely — social scrapers do not resolve
+relative URLs against the page they fetched.
 
 ## The App Store link
 
@@ -35,6 +44,43 @@ available in your country" interstitial instead of the listing.
 which is what makes Safari on iOS show its native Smart App Banner above the
 page — a second route to the listing that costs nothing and does not depend on
 the visitor reaching a badge.
+
+## Pointing chizzl.co at the site
+
+The build is already domain-agnostic, so this is DNS plus one setting — no
+code change.
+
+**1. DNS at your registrar.** Four A records on the apex, all host `@`:
+
+```
+185.199.108.153
+185.199.109.153
+185.199.110.153
+185.199.111.153
+```
+
+Add the AAAA records too if the registrar supports them, so the site answers
+over IPv6:
+
+```
+2606:50c0:8000::153   2606:50c0:8001::153
+2606:50c0:8002::153   2606:50c0:8003::153
+```
+
+Then one CNAME so the `www` spelling works: host `www`, value
+`mgrugan.github.io`.
+
+**2. Repo settings.** Settings › Pages › Custom domain → `chizzl.co` → Save.
+GitHub re-checks DNS and issues a certificate, usually within minutes. Tick
+**Enforce HTTPS** once that box stops being greyed out.
+
+Order matters: set the DNS first. Naming the custom domain before DNS resolves
+makes GitHub redirect `mgrugan.github.io/chizzl-website/` to a hostname that
+does not answer yet, which takes the site down until it does.
+
+Nothing in this repo hard-codes the domain except the two social-preview tags
+noted above, so the github.io URL keeps working throughout and simply starts
+redirecting once the domain is live.
 
 ## `/go/` — the instant redirect
 
@@ -74,6 +120,56 @@ to avoid. Change one, change the other.
 
 To make the whole site behave this way, point the root at it — but the landing
 page then stops existing for anyone, including people arriving from search.
+
+## Referral links
+
+`chizzl.co/r/<code>` — short enough to read out loud, and it carries an
+attribution code all the way to the App Store.
+
+```
+chizzl.co/r/kai        →  …/id6790546338?ct=kai&mt=8
+chizzl.co/go/?r=kai    →  the same thing, one hop shorter
+```
+
+Codes are `[A-Za-z0-9_-]`, up to 32 characters. Anything else is dropped rather
+than passed through to the outbound URL. Make one up per creator or per post —
+there is nothing to register.
+
+**Where the numbers show up:** App Store Connect › App Analytics › Acquisition
+› Campaigns, keyed by the `ct` value. Put your provider token in
+`APPLE_PROVIDER_TOKEN` (`src/config.ts`) and `PT` (`public/go/index.html`);
+it is the `pt=` in any link that Campaigns page generates. Codes still record
+without it. The site's own badges are tagged `ct=website`, so creator traffic
+is separable from people who found the site on their own.
+
+**How `/r/` works.** GitHub Pages is static and has no rewrite rules, so
+`/r/<code>` is caught by `public/404.html` — the one hook Pages offers — and
+forwarded to `/go/` with the code attached. It costs one extra request over
+linking `/go/?r=` directly. That file is a real not-found page for every other
+unmatched path.
+
+Referrals opened from inside Instagram or Facebook keep their code through the
+webview escape, and through the manual button if the escape is swallowed. Both
+are covered by tests.
+
+### What this is not
+
+Apple pays **no commission on apps**. The affiliate program stopped paying on
+app referrals in 2018, so there is no Apple revenue share to plug in here, and
+any service offering you one for iOS apps is not describing Apple's terms.
+
+What you get instead is attribution: which code drove how many installs. That
+is the number to pay a creator against if you want to run a paid programme —
+you would be paying them yourself, out of band.
+
+Two limits worth knowing before promising anyone a payout:
+
+- App Analytics is **aggregate and privacy-thresholded**. Low-volume campaigns
+  can report nothing at all until they clear Apple's minimum.
+- It counts installs, not subscriptions. Attributing revenue rather than
+  downloads means an in-app referral code the user types at signup, which is
+  app work, not website work — and is also the only version accurate enough to
+  pay commission on.
 
 ## Instagram and Facebook in-app browsers
 

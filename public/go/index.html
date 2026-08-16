@@ -26,7 +26,24 @@
 
 <script>
 (function () {
-  var STORE = 'https://apps.apple.com/app/chizzl-ai/id6790546338';
+  var APP = 'https://apps.apple.com/app/chizzl-ai/id6790546338';
+
+  // Apple provider token, from App Store Connect > App Analytics >
+  // Acquisition > Campaigns. Keep in step with APPLE_PROVIDER_TOKEN in
+  // src/config.ts. Campaign codes still record without it.
+  var PT = '';
+
+  // ?r=<code> tags the install so App Analytics can attribute it. Referral
+  // links are /r/<code>, which lands here through 404.html.
+  var code = (function () {
+    var m = /[?&]r=([A-Za-z0-9_-]{1,32})/.exec(location.search);
+    return m ? m[1] : '';
+  })();
+
+  var STORE = APP + (code
+    ? '?' + (PT ? 'pt=' + encodeURIComponent(PT) + '&' : '') + 'ct=' + encodeURIComponent(code) + '&mt=8'
+    : '');
+
   var ua = navigator.userAgent || '';
   var iOS = /iPad|iPhone|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
   var android = /Android/.test(ua);
@@ -55,12 +72,6 @@
     // replace(), not href: the store must not become a Back-button trap.
     if (url === STORE) location.replace(url); else location.href = url;
   }
-
-  // A return trip lands here again — after Back from the store, or when the
-  // host app restores the tab. Redirecting a second time would pin the user
-  // in a loop they cannot Back out of, so show the card instead.
-  var returning = false;
-  try { returning = sessionStorage.getItem('chizzl-go') === '1'; sessionStorage.setItem('chizzl-go', '1'); } catch (e) {}
 
   var settled = false;
   function settle() { settled = true; }
@@ -100,6 +111,15 @@
     if (document.visibilityState === 'visible' && Date.now() - firedAt > 700) backHere();
   });
 
+  // The button below is authored with the untagged URL, since the code is
+  // only known at runtime. Patch it so a visitor who ends up tapping manually
+  // is still attributed. (The <noscript> path cannot be patched, but a
+  // JS-off visitor never reached a /r/ link in the first place.)
+  if (code) ready(function () {
+    var cta = document.getElementById('cta');
+    if (cta) cta.href = STORE;
+  });
+
   function ready(fn) {
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn);
     else fn();
@@ -110,23 +130,24 @@
   window.__chizzlGo = go;
   window.__chizzlTarget = target;
 
-  if (returning) {
-    ready(reveal);
-  } else {
-    // Redirect after the parse, not from inside the head. Firing a navigation
-    // mid-parse truncates the document, and the fallback card below is then
-    // never built — which is exactly the markup you need when the redirect is
-    // the thing that failed. This file is a few KB and pulls in no fonts, CSS
-    // or images, so waiting for DOMContentLoaded costs a fraction of a
-    // millisecond and buys a guaranteed escape hatch.
-    ready(function () {
-      go();
-      // In-app webviews swallow the escape silently. A normal browser has
-      // already left by now, so a longer wait there just avoids flashing the
-      // card at someone on a slow connection.
-      setTimeout(reveal, inApp ? 1400 : 2500);
-    });
-  }
+  // Redirect after the parse, not from inside the head. Firing a navigation
+  // mid-parse truncates the document, and the fallback card below is then
+  // never built — which is exactly the markup you need when the redirect is
+  // the thing that failed. This file is a few KB and pulls in no fonts, CSS
+  // or images, so waiting for DOMContentLoaded costs a fraction of a
+  // millisecond and buys a guaranteed escape hatch.
+  //
+  // There is deliberately no "already redirected once" guard here. replace()
+  // keeps the store off the history stack, and backHere() covers the return
+  // trip, so re-entry is always a fresh intent — tapping a second creator's
+  // link must redirect, not stall on a card.
+  ready(function () {
+    go();
+    // In-app webviews swallow the escape silently. A normal browser has
+    // already left by now, so a longer wait there just avoids flashing the
+    // card at someone on a slow connection.
+    setTimeout(reveal, inApp ? 1400 : 2500);
+  });
 })();
 </script>
 
@@ -178,7 +199,7 @@
       <h1>Open the App Store</h1>
       <p id="why">Tap below to finish opening Chizzl AI.</p>
       <a class="btn" id="cta" href="https://apps.apple.com/app/chizzl-ai/id6790546338" rel="noopener">Get Chizzl AI</a>
-      <a class="alt" href="/chizzl-website/">Visit the site instead</a>
+      <a class="alt" href="../">Visit the site instead</a>
     </div>
   </div>
 

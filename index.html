@@ -11,12 +11,17 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="CHIZZL AI">
 <meta property="og:description" content="Photos of your body become a training plan, then Chizzl tracks whether it is working.">
-<meta property="og:image" content="/chizzl-website/assets/img/og-image.png">
+<!-- og:image and og:url must be absolute: scrapers do not resolve relative
+     URLs against the page they fetched. Everything else stays relative so the
+     page serves from the Pages subpath and from the apex alike. -->
+<meta property="og:url" content="https://chizzl.co/">
+<meta property="og:image" content="https://chizzl.co/assets/img/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="/chizzl-website/assets/img/favicon.png" type="image/png">
-<link rel="apple-touch-icon" href="/chizzl-website/assets/img/apple-touch-icon.png">
-<link rel="preload" href="/chizzl-website/assets/fonts/inter-var-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/chizzl-website/assets/fonts/manrope-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="canonical" href="https://chizzl.co/">
+<link rel="icon" href="./assets/img/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="./assets/img/apple-touch-icon.png">
+<link rel="preload" href="./assets/fonts/inter-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="./assets/fonts/manrope-400-latin.woff2" as="font" type="font/woff2" crossorigin>
 </head>
 <body>
 <div id="root"></div>

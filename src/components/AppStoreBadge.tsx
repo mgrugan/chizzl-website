@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { APP_STORE_URL } from '../config';
+import { storeUrl } from '../config';
 import {
   appName,
   copyLink,
@@ -26,16 +26,19 @@ type Size = 'default' | 'compact';
 
 export function AppStoreBadge({ size = 'default', className = '' }: { size?: Size; className?: string }) {
   const [showFallback, setShowFallback] = useState(false);
-  const live = APP_STORE_URL.trim().length > 0;
+  // Tagged so App Analytics separates installs the site drove from installs
+  // that came out of App Store search. Referral links use their own codes.
+  const url = storeUrl('website');
+  const live = url.length > 0;
 
   const handleClick = useCallback(
     (event: React.MouseEvent<HTMLAnchorElement>) => {
       // Outside a Meta webview this stays a plain anchor and navigates natively.
       if (!live || !isInAppBrowser()) return;
       event.preventDefault();
-      escapeToBrowser(APP_STORE_URL, { onFallback: () => setShowFallback(true) });
+      escapeToBrowser(url, { onFallback: () => setShowFallback(true) });
     },
-    [live],
+    [live, url],
   );
 
   const pad = size === 'compact' ? 'h-11 pl-3 pr-4 gap-2' : 'h-14 pl-4 pr-5 gap-2.5';
@@ -46,7 +49,7 @@ export function AppStoreBadge({ size = 'default', className = '' }: { size?: Siz
   return (
     <>
       <a
-        href={live ? APP_STORE_URL : undefined}
+        href={live ? url : undefined}
         onClick={handleClick}
         role={live ? undefined : 'link'}
         aria-disabled={live ? undefined : true}
@@ -70,7 +73,7 @@ export function AppStoreBadge({ size = 'default', className = '' }: { size?: Siz
         </span>
       </a>
 
-      {showFallback && <EscapeSheet onClose={() => setShowFallback(false)} />}
+      {showFallback && <EscapeSheet url={url} onClose={() => setShowFallback(false)} />}
     </>
   );
 }
@@ -79,7 +82,7 @@ export function AppStoreBadge({ size = 'default', className = '' }: { size?: Siz
  * Shown when the automatic escape was swallowed by the host app.
  * Offers a retry, the manual route, and a copy-link fallback.
  */
-function EscapeSheet({ onClose }: { onClose: () => void }) {
+function EscapeSheet({ url, onClose }: { url: string; onClose: () => void }) {
   const [copied, setCopied] = useState(false);
   const retryRef = useRef<HTMLButtonElement>(null);
   const app = appName();
@@ -115,7 +118,7 @@ function EscapeSheet({ onClose }: { onClose: () => void }) {
         <button
           ref={retryRef}
           type="button"
-          onClick={() => { onClose(); escapeToBrowser(APP_STORE_URL); }}
+          onClick={() => { onClose(); escapeToBrowser(url); }}
           className="mt-5 h-12 w-full rounded-control bg-brand font-display text-[15px] font-semibold text-on-brand transition active:scale-[0.98]"
         >
           Open in my native browser
@@ -123,7 +126,7 @@ function EscapeSheet({ onClose }: { onClose: () => void }) {
 
         <button
           type="button"
-          onClick={() => copyLink(APP_STORE_URL).then(() => setCopied(true), () => setCopied(false))}
+          onClick={() => copyLink(url).then(() => setCopied(true), () => setCopied(false))}
           className="mt-2.5 h-12 w-full rounded-control border border-hairline-strong font-display text-[15px] font-semibold text-ink transition active:scale-[0.98]"
         >
           {copied ? 'Link copied' : 'Copy link'}
