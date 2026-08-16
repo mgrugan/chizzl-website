@@ -3,8 +3,7 @@
 Landing page for the CHIZZL AI iOS app. React + Vite + Tailwind v4 + Motion,
 built against the design system in `DESIGN.md`.
 
-Live at **https://mgrugan.github.io/chizzl-website/**, moving to
-**https://chizzl.co**
+Live at **https://chizzl.co**
 
 ## Develop
 
@@ -23,9 +22,8 @@ asset, font and image resolves.
 
 The exceptions are `og:url`, `og:image` and `rel=canonical` in `index.html`.
 Those have to be absolute, because scrapers and search engines do not resolve
-relative URLs against the page they fetched. They currently point at the
-github.io URL and become `https://chizzl.co/...` once the domain resolves —
-see the go-live checklist below.
+relative URLs against the page they fetched, so they name `https://chizzl.co`
+directly.
 
 ## The App Store link
 
@@ -72,21 +70,21 @@ over IPv6:
 Then one CNAME so the `www` spelling works: host `www`, value
 `mgrugan.github.io`.
 
-**2. Repo settings.** Settings › Pages › Custom domain → `chizzl.co` → Save.
-GitHub re-checks DNS and issues a certificate, usually within minutes. Tick
-**Enforce HTTPS** once that box stops being greyed out.
+**2. The domain itself.** `public/CNAME` holds `chizzl.co`, which is what
+registers the custom domain with Pages on each deploy — Settings › Pages shows
+it after the first one. Tick **Enforce HTTPS** there once the certificate has
+been issued, which takes a few minutes.
 
-**3. Then, in this repo.** Swap the three absolute tags in `index.html`
-(`og:url`, `og:image`, `rel=canonical`) over to `https://chizzl.co/...`. That
-is the whole code change.
+Order matters, and the CNAME file is the switch: naming the custom domain
+before DNS resolves makes GitHub redirect `mgrugan.github.io/chizzl-website/`
+to a hostname that does not answer yet, which takes the site down until it
+does. Set the DNS records first and confirm they resolve.
 
-Order matters: set the DNS first. Naming the custom domain before DNS resolves
-makes GitHub redirect `mgrugan.github.io/chizzl-website/` to a hostname that
-does not answer yet, which takes the site down until it does.
-
-Nothing in this repo hard-codes the domain except the two social-preview tags
-noted above, so the github.io URL keeps working throughout and simply starts
-redirecting once the domain is live.
+GoDaddy specifics, since they cost an afternoon: the parking page is an A
+record on `@` displayed as **"WebsiteBuilder Site"** rather than an IP, and it
+has to be deleted or visitors get round-robined onto it. GoDaddy also ships a
+default `www` CNAME pointing at `@`; a name can hold only one CNAME, so that
+record must be **edited**, not added alongside.
 
 ## `/go/` — the instant redirect
 
