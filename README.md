@@ -70,20 +70,29 @@ over IPv6:
 Then one CNAME so the `www` spelling works: host `www`, value
 `mgrugan.github.io`.
 
-**2. The domain registration.** Handled by the deploy workflow, which PUTs
-`cname` to the Pages API alongside `build_type`. Nothing to click.
+**2. Repo settings, by hand.** Settings › Pages › Custom domain → `chizzl.co`
+→ Save. Then tick **Enforce HTTPS** once the certificate is issued a few
+minutes later.
 
-That call is there because a `CNAME` file does **not** work here. Under the
-legacy branch builder a CNAME file in the repo registers the domain; under the
-**Actions** builder the domain lives in repository settings and the artifact's
-CNAME file is inert. The symptom of assuming otherwise is a deployed `/CNAME`
-that reads back correctly while `github.io` refuses to redirect and the apex
-keeps being served GitHub's `*.github.io` certificate, failing every HTTPS
-handshake. `public/CNAME` is kept anyway — harmless, and it records the
-intended domain next to the code.
+This one cannot be automated from inside the repo, and two plausible-looking
+shortcuts both fail:
 
-A later step turns on **Enforce HTTPS**, retrying while the certificate is
-issued and giving up quietly rather than failing an otherwise good deploy.
+- **A `CNAME` file does not register the domain here.** That is the *legacy
+  branch builder's* mechanism. Under the Actions builder the domain lives in
+  repository settings and the artifact's CNAME file is inert. `public/CNAME`
+  is kept anyway — harmless, and it records the intended domain next to the
+  code — but it is not what switches anything on.
+- **The Pages API rejects `GITHUB_TOKEN`.** `PUT /repos/{owner}/{repo}/pages`
+  is where `cname` and `https_enforced` live, and it answers 403 *Resource not
+  accessible by integration*. `pages: write` grants deployment creation, not
+  settings edits; that needs repo admin. Automating it would mean a PAT in a
+  secret, which is not worth it for a setting changed once.
+
+The symptom of getting this wrong is specific and worth recognising: DNS
+resolves to GitHub, `http://` even 308s to `https://`, and then every HTTPS
+request dies because GitHub is presenting its `*.github.io` certificate for
+your hostname. That is not propagation and it does not clear on its own — it
+means the domain was never registered.
 
 Order matters: set the DNS records and confirm they resolve before naming the
 domain in settings. Doing it the other way round makes GitHub redirect
