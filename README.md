@@ -70,18 +70,20 @@ over IPv6:
 Then one CNAME so the `www` spelling works: host `www`, value
 `mgrugan.github.io`.
 
-**2. Repo settings.** Settings › Pages › Custom domain → `chizzl.co` → Save,
-then tick **Enforce HTTPS** once the certificate has been issued a few minutes
-later.
+**2. The domain registration.** Handled by the deploy workflow, which PUTs
+`cname` to the Pages API alongside `build_type`. Nothing to click.
 
-This step cannot be done from the repo. `public/CNAME` exists and deploys, but
-a CNAME file only registers the domain under the **legacy branch builder**;
-this repo publishes through the **Actions** workflow, where the custom domain
-lives in repository settings and the artifact's CNAME file is inert. The
-symptom when you assume otherwise is a deployed `/CNAME` that reads correctly
-while `github.io` refuses to redirect and `https://chizzl.co` keeps presenting
-GitHub's `*.github.io` certificate, so the handshake fails. The file is kept
-because it costs nothing and records the intended domain.
+That call is there because a `CNAME` file does **not** work here. Under the
+legacy branch builder a CNAME file in the repo registers the domain; under the
+**Actions** builder the domain lives in repository settings and the artifact's
+CNAME file is inert. The symptom of assuming otherwise is a deployed `/CNAME`
+that reads back correctly while `github.io` refuses to redirect and the apex
+keeps being served GitHub's `*.github.io` certificate, failing every HTTPS
+handshake. `public/CNAME` is kept anyway — harmless, and it records the
+intended domain next to the code.
+
+A later step turns on **Enforce HTTPS**, retrying while the certificate is
+issued and giving up quietly rather than failing an otherwise good deploy.
 
 Order matters: set the DNS records and confirm they resolve before naming the
 domain in settings. Doing it the other way round makes GitHub redirect

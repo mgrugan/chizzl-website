@@ -30,18 +30,27 @@ jobs:
           node-version: 22
           cache: npm
 
-      # The site is now a Vite build, so the repo root is source, not output.
-      # GitHub's legacy branch builder would publish that source verbatim and
-      # serve a broken page, so Pages has to build from Actions instead. This
-      # flips the source once; it is a no-op on every run after the first.
-      - name: Build Pages from Actions, not from the branch
+      # Two settings that have to be API calls rather than files.
+      #
+      # build_type: the repo root is Vite source, not publishable output, so
+      # the legacy branch builder would serve that source verbatim as a broken
+      # page. Pages has to build from Actions instead.
+      #
+      # cname: under the branch builder a CNAME file in the repo registers the
+      # custom domain. Under Actions it does not — the domain lives in
+      # repository settings and public/CNAME is inert. Left unset, the apex
+      # resolves to GitHub but gets served the *.github.io certificate, so
+      # every HTTPS request fails the handshake.
+      #
+      # Both are idempotent and no-ops on every run after the first.
+      - name: Register the custom domain and build from Actions
         run: |
           code=$(curl -sS -o /tmp/pages.json -w '%{http_code}' -X PUT \
             -H "Authorization: Bearer ${{ github.token }}" \
             -H "Accept: application/vnd.github+json" \
             "https://api.github.com/repos/${{ github.repository }}/pages" \
-            -d '{"build_type":"workflow"}')
-          echo "set build_type=workflow -> HTTP $code"
+            -d '{"build_type":"workflow","cname":"chizzl.co"}')
+          echo "set build_type=workflow, cname=chizzl.co -> HTTP $code"
           cat /tmp/pages.json 2>/dev/null || true
 
       - uses: actions/configure-pages@v5
@@ -58,3 +67,25 @@ jobs:
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
+
+      # Enforce HTTPS as soon as the certificate exists. It cannot be set
+      # before then — GitHub rejects it while the domain is still unverified —
+      # so this waits a little and gives up quietly rather than failing a
+      # deploy that otherwise succeeded. Once set it stays set, so later runs
+      # take the first branch immediately.
+      - name: Enforce HTTPS once the certificate is issued
+        continue-on-error: true
+        run: |
+          for i in $(seq 1 10); do
+            code=$(curl -sS -o /tmp/https.json -w '%{http_code}' -X PUT \
+              -H "Authorization: Bearer ${{ github.token }}" \
+              -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/repos/${{ github.repository }}/pages" \
+              -d '{"https_enforced":true}')
+            if [ "$code" = "204" ]; then echo "HTTPS enforced (attempt $i)"; exit 0; fi
+            echo "attempt $i: HTTP $code, certificate not ready yet"
+            cat /tmp/https.json 2>/dev/null || true
+            sleep 30
+          done
+          echo "Certificate still pending. It will finish on its own; tick"
+          echo "Enforce HTTPS in Settings > Pages, or just re-run this workflow."
