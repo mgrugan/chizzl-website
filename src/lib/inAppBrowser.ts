@@ -1,10 +1,11 @@
 /**
- * Escape Meta's in-app webviews.
+ * Escape in-app webviews.
  *
- * Instagram, Threads, Facebook and Messenger render links in an embedded
- * webview that refuses App Store links: a tap does nothing, with no error.
- * The fix hands the URL back to the host app using a scheme it recognises,
- * which makes it launch the system browser.
+ * Instagram, Threads, Facebook, Messenger, TikTok and Reddit render links in
+ * an embedded webview that refuses App Store links: a tap does nothing, with
+ * no error. The fix hands the URL back to the host app using a scheme it
+ * recognises, which makes it launch the system browser — or, for the apps that
+ * publish no such scheme, asks the OS to open the App Store app directly.
  *
  * Everything fires synchronously inside the click handler. iOS discards
  * navigation requested after the user-gesture window closes.
@@ -31,13 +32,21 @@ export const isFacebook = (): boolean => /FBAN|FBAV|FB_IAB|FB4A|FBIOS|Messenger/
 export const isTikTok = (): boolean =>
   /BytedanceWebview|musical_ly|TikTok|Trill|aweme/i.test(UA);
 
-export const isInAppBrowser = (): boolean => isInstagram() || isFacebook() || isTikTok();
+/** Reddit's webview, which tags itself the same way on iOS and Android. */
+export const isReddit = (): boolean => /Reddit/i.test(UA);
 
-export type InAppName = 'instagram' | 'facebook' | 'tiktok' | null;
+export const isInAppBrowser = (): boolean =>
+  isInstagram() || isFacebook() || isTikTok() || isReddit();
+
+export type InAppName = 'instagram' | 'facebook' | 'tiktok' | 'reddit' | null;
 
 /** Instagram wins over Facebook: its UA can carry both signatures. */
 export const appName = (): InAppName =>
-  isInstagram() ? 'instagram' : isFacebook() ? 'facebook' : isTikTok() ? 'tiktok' : null;
+  isInstagram() ? 'instagram'
+    : isFacebook() ? 'facebook'
+      : isTikTok() ? 'tiktok'
+        : isReddit() ? 'reddit'
+          : null;
 
 /** The URL that hands `url` to the system browser. Unchanged outside a webview. */
 export function buildEscapeUrl(url: string): string {
@@ -50,8 +59,8 @@ export function buildEscapeUrl(url: string): string {
   if (isAndroid()) {
     return `intent://${url.replace(/^[a-z][a-z0-9+.-]*:\/\//i, '')}#Intent;scheme=https;end`;
   }
-  if (isTikTok()) {
-    // TikTok exposes no "open in the system browser" scheme the way Instagram
+  if (isTikTok() || isReddit()) {
+    // Neither exposes an "open in the system browser" scheme the way Instagram
     // does, so rather than escaping to Safari this asks iOS to open the App
     // Store app directly. itms-apps:// is the store's own scheme, so it is
     // handled by the OS rather than by the webview that is doing the blocking.

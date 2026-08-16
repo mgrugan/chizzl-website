@@ -52,7 +52,8 @@
   var instagram = /Instagram|Threads|Barcelona/i.test(ua);
   var facebook = /FBAN|FBAV|FB_IAB|FB4A|FBIOS|Messenger/i.test(ua);
   var tiktok = /BytedanceWebview|musical_ly|TikTok|Trill|aweme/i.test(ua);
-  var inApp = instagram || facebook || tiktok;
+  var reddit = /Reddit/i.test(ua);
+  var inApp = instagram || facebook || tiktok || reddit;
 
   // Mirrors src/lib/inAppBrowser.ts. Kept as a copy rather than an import
   // because importing anything would cost the round trip this page exists to
@@ -60,10 +61,10 @@
   function target() {
     if (!inApp) return STORE;
     if (android) return 'intent://' + STORE.replace(/^[a-z][a-z0-9+.-]*:\/\//i, '') + '#Intent;scheme=https;end';
-    // TikTok has no escape-to-browser scheme, so open the App Store app
-    // directly through the store's own scheme, which the OS handles rather
-    // than the webview doing the blocking.
-    if (tiktok) return STORE.replace(/^https?:/i, 'itms-apps:');
+    // Neither TikTok nor Reddit has an escape-to-browser scheme, so open the
+    // App Store app directly through the store's own scheme, which the OS
+    // handles rather than the webview doing the blocking.
+    if (tiktok || reddit) return STORE.replace(/^https?:/i, 'itms-apps:');
     if (instagram) return 'instagram://extbrowser/?url=' + encodeURIComponent(STORE);
     if (facebook) return 'x-safari-' + STORE;
     return STORE;
@@ -238,10 +239,11 @@
     var ig = /Instagram|Threads|Barcelona/i.test(ua);
     var fb = /FBAN|FBAV|FB_IAB|FB4A|FBIOS|Messenger/i.test(ua);
     var tt = /BytedanceWebview|musical_ly|TikTok|Trill|aweme/i.test(ua);
-    if (ig || fb || tt) {
+    var rd = /Reddit/i.test(ua);
+    if (ig || fb || tt || rd) {
       var iOS = /iPad|iPhone|iPod/.test(ua);
       document.getElementById('why').innerHTML =
-        (ig ? 'Instagram' : fb ? 'Facebook' : 'TikTok') +
+        (ig ? 'Instagram' : fb ? 'Facebook' : tt ? 'TikTok' : 'Reddit') +
         " can't open App Store links in its own browser. " +
         'Tap below, or use <b>' + (iOS ? '•••' : '⋮') + '</b> in the corner then <b>Open in browser</b>.';
       document.getElementById('cta').addEventListener('click', function (e) {

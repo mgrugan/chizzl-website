@@ -196,8 +196,9 @@ Two limits worth knowing before promising anyone a payout:
 
 ## Social traffic never sees the landing page
 
-Anyone arriving inside Instagram, Threads, Facebook, Messenger or TikTok is
-redirected off the root straight to `/go/`, and from there to the App Store.
+Anyone arriving inside Instagram, Threads, Facebook, Messenger, TikTok or
+Reddit is redirected off the root straight to `/go/`, and from there to the App
+Store.
 They followed a bio link to download the app, and that webview is also where
 App Store links get blocked, so the handling in `/go/` is what they need — not
 a page to read.
@@ -217,7 +218,7 @@ first two must not wait on a bundle. Change one, change all three. A test
 walks every app on both platforms to catch drift; that is what caught `/go/`
 matching only `Instagram` while the module also matched Threads.
 
-## Instagram, Facebook and TikTok in-app browsers
+## In-app browsers
 
 Meta's apps render links in an embedded webview that refuses App Store links.
 A tap does nothing at all, with no error. `src/lib/inAppBrowser.ts` handles it:
@@ -227,13 +228,13 @@ A tap does nothing at all, with no error. `src/lib/inAppBrowser.ts` handles it:
 | Any normal browser | The badge stays a plain `<a href>` and navigates natively. Nothing is intercepted. |
 | Instagram / Threads, iOS | `location.href = 'instagram://extbrowser/?url=' + encodeURIComponent(url)` |
 | Facebook / Messenger, iOS | `window.open('x-safari-' + url, '_blank')` |
-| TikTok, iOS | `location.href = url.replace(/^https?:/, 'itms-apps:')` |
+| TikTok / Reddit, iOS | `location.href = url.replace(/^https?:/, 'itms-apps:')` |
 | Android, any of them | `location.href = 'intent://<url-without-scheme>#Intent;scheme=https;end'` |
 
-TikTok is the odd one: it publishes no escape-to-browser scheme, so instead of
-routing through Safari it asks iOS to open the App Store app directly with the
-store's own `itms-apps://` scheme, which the OS handles rather than the webview
-that is doing the blocking.
+TikTok and Reddit are the odd ones: neither publishes an escape-to-browser
+scheme, so instead of routing through Safari they ask iOS to open the App Store
+app directly with the store's own `itms-apps://` scheme, which the OS handles
+rather than the webview that is doing the blocking.
 
 Two details that matter:
 

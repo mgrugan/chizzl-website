@@ -27,8 +27,8 @@
 <link rel="preload" href="./assets/fonts/manrope-400-latin.woff2" as="font" type="font/woff2" crossorigin>
 
 <!--
-  Traffic arriving inside Instagram, Facebook, Messenger, Threads or TikTok
-  skips the landing page and goes straight to the App Store. Those visitors
+  Traffic arriving inside Instagram, Facebook, Messenger, Threads, TikTok or
+  Reddit skips the landing page and goes straight to the App Store. Those visitors
   came from a bio link to download the app, and the in-app webview is also
   where App Store links are blocked, so the handling in /go/ is what they
   need — not a page to read.
@@ -46,7 +46,7 @@
 <script>
 (function () {
   var ua = navigator.userAgent || '';
-  if (!/Instagram|Threads|Barcelona|FBAN|FBAV|FB_IAB|FB4A|FBIOS|Messenger|BytedanceWebview|musical_ly|TikTok|Trill|aweme/i.test(ua)) return;
+  if (!/Instagram|Threads|Barcelona|FBAN|FBAV|FB_IAB|FB4A|FBIOS|Messenger|BytedanceWebview|musical_ly|TikTok|Trill|aweme|Reddit/i.test(ua)) return;
   try {
     if (/[?&]stay=1/.test(location.search)) { sessionStorage.setItem('chizzl-stay', '1'); return; }
     if (sessionStorage.getItem('chizzl-stay') === '1') return;
