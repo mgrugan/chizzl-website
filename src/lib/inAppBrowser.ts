@@ -33,6 +33,12 @@ export const appName = (): MetaApp =>
 
 /** The URL that hands `url` to the system browser. Unchanged outside a webview. */
 export function buildEscapeUrl(url: string): string {
+  // Guard first, or the Android branch below rewrites the URL for every
+  // Android browser rather than only the webviews. Callers here always gate on
+  // isInAppBrowser() so nothing was reaching it, but the function is exported
+  // and its contract is the sentence directly above.
+  if (!isInAppBrowser()) return url;
+
   if (isAndroid()) {
     return `intent://${url.replace(/^[a-z][a-z0-9+.-]*:\/\//i, '')}#Intent;scheme=https;end`;
   }

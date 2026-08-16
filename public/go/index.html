@@ -80,6 +80,24 @@
     window.addEventListener(e, settle, { once: true });
   });
 
+  // iOS discards custom-scheme navigation that has no user gesture behind it,
+  // and a cold page load is exactly that — so the automatic escape often does
+  // not fire inside a Meta webview. A real tap does carry a gesture, so any
+  // tap anywhere on the page re-fires it.
+  //
+  // This is armed the instant the page loads, not when the card appears. The
+  // card is a second or so behind the redirect, and someone who taps at the
+  // spinner is the most likely person in the world to want this — leaving the
+  // handler until after the reveal made that first tap do nothing.
+  var armed = false;
+  function armTapRetry() {
+    if (armed || !inApp) return;
+    armed = true;
+    document.addEventListener('click', function once() {
+      document.removeEventListener('click', once); go();
+    });
+  }
+
   var revealed = false;
   function reveal() {
     if (settled || revealed) return;
@@ -87,12 +105,7 @@
     if (!el) return;
     el.hidden = false;
     revealed = true;
-    // iOS discards custom-scheme navigation with no user gesture behind it,
-    // which is exactly the case on a cold page load. So the next tap anywhere
-    // on the page retries the escape with a real gesture attached.
-    if (inApp) document.addEventListener('click', function once() {
-      document.removeEventListener('click', once); go();
-    });
+    armTapRetry();
   }
 
   // Being back on this page after the redirect already fired means the handoff
@@ -143,10 +156,12 @@
   // link must redirect, not stall on a card.
   ready(function () {
     go();
-    // In-app webviews swallow the escape silently. A normal browser has
-    // already left by now, so a longer wait there just avoids flashing the
-    // card at someone on a slow connection.
-    setTimeout(reveal, inApp ? 1400 : 2500);
+    armTapRetry();
+    // In-app webviews swallow the escape silently, and iOS usually discards it
+    // outright for want of a gesture, so do not leave the spinner up long
+    // there. A normal browser has already left by now, so the longer wait just
+    // avoids flashing the card at someone on a slow connection.
+    setTimeout(reveal, inApp ? 900 : 2500);
   });
 })();
 </script>
