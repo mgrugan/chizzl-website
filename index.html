@@ -56,6 +56,31 @@
   location.replace('./go/' + (location.search || ''));
 })();
 </script>
+
+<!--
+  Cloudflare Web Analytics. No cookies, so no consent banner, and nothing is
+  requested until a real token is set below — an empty or malformed one means
+  the beacon is simply never injected.
+
+  Deliberately placed AFTER the redirect above: a visitor being sent to /go/
+  is leaving, so there is no reason to spend a request measuring them, and the
+  redirect must not wait on this.
+
+  Token: Cloudflare dashboard > Analytics & Logs > Web Analytics > Add a site.
+  It is 32 hex characters. Adding a site there does NOT require moving DNS to
+  Cloudflare.
+-->
+<script>
+(function () {
+  var TOKEN = '';
+  if (!/^[0-9a-f]{32}$/.test(TOKEN)) return;
+  var s = document.createElement('script');
+  s.defer = true;
+  s.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+  s.setAttribute('data-cf-beacon', JSON.stringify({ token: TOKEN }));
+  document.head.appendChild(s);
+})();
+</script>
 </head>
 <body>
 <div id="root"></div>

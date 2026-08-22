@@ -144,6 +144,36 @@ to avoid. Change one, change the other.
 To make the whole site behave this way, point the root at it — but the landing
 page then stops existing for anyone, including people arriving from search.
 
+## Knowing how many people visited
+
+Two halves, because one tool cannot see both.
+
+**Landing-page visits — Cloudflare Web Analytics.** Free, unlimited, and
+cookieless, so it needs no consent banner. Get a token from the Cloudflare
+dashboard under *Analytics & Logs › Web Analytics › Add a site* — that does
+**not** require moving DNS to Cloudflare — and paste it into `TOKEN` in the
+analytics block at the bottom of `index.html`'s `<head>`.
+
+Until a well-formed token is set the beacon is never injected and the page
+makes no external request at all, so the placeholder is safe to ship. A test
+asserts exactly that, and asserts a malformed token is ignored rather than
+sending junk.
+
+The block sits deliberately **after** the social redirect. A visitor on their
+way to `/go/` is leaving, so there is no reason to spend a request measuring
+them, and the redirect must not wait on a script.
+
+**Redirect traffic — App Store Connect.** `/go/` is not instrumented, on
+purpose: it exists to be one request and gone, and an analytics library there
+would add a round trip to the one page whose whole job is to be instant. Since
+most social traffic never renders the landing page, that half of the funnel is
+read from Apple instead — App Analytics › Acquisition › Campaigns shows product
+page views and installs per `ct=` code, which is exactly the `/go/` throughput,
+already broken down by source.
+
+So: Cloudflare for "how many people saw the site", Apple for "how many the
+links sent to the store, and how many installed".
+
 ## Referral links
 
 `chizzl.co/r/<code>` — short enough to read out loud, and it carries an
