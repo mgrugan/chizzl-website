@@ -58,24 +58,30 @@
 </script>
 
 <!--
-  Cloudflare Web Analytics. No cookies, so no consent banner, and nothing is
-  requested until a real token is set below — an empty or malformed one means
-  the beacon is simply never injected.
+  Cloudflare Web Analytics. No cookies, so no consent banner. A blank or
+  malformed token injects nothing at all rather than firing a broken request,
+  which is what makes it safe to commit the placeholder.
 
   Deliberately placed AFTER the redirect above: a visitor being sent to /go/
   is leaving, so there is no reason to spend a request measuring them, and the
   redirect must not wait on this.
 
-  Token: Cloudflare dashboard > Analytics & Logs > Web Analytics > Add a site.
-  It is 32 hex characters. Adding a site there does NOT require moving DNS to
-  Cloudflare.
+  The numbers are private: they are readable only from the Cloudflare account
+  that owns this token, at dash.cloudflare.com. Nothing is rendered on the
+  page and no visitor can see a count. The token identifies where to SEND
+  measurements; it does not grant anyone the ability to read them.
+
+  Token: Cloudflare dashboard > Analytics & Logs > Web Analytics.
 -->
 <script>
 (function () {
-  var TOKEN = '';
+  var TOKEN = '52eb4d4b4bd448f5af3f3a9b646d4bfb';
+  // Injected rather than written as a literal tag so a blank or half-pasted
+  // token is a no-op instead of a broken request, and so the block above can
+  // return before ever reaching this.
   if (!/^[0-9a-f]{32}$/.test(TOKEN)) return;
   var s = document.createElement('script');
-  s.defer = true;
+  s.type = 'module';
   s.src = 'https://static.cloudflareinsights.com/beacon.min.js';
   s.setAttribute('data-cf-beacon', JSON.stringify({ token: TOKEN }));
   document.head.appendChild(s);

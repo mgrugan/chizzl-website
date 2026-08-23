@@ -148,16 +148,25 @@ page then stops existing for anyone, including people arriving from search.
 
 Two halves, because one tool cannot see both.
 
-**Landing-page visits — Cloudflare Web Analytics.** Free, unlimited, and
-cookieless, so it needs no consent banner. Get a token from the Cloudflare
-dashboard under *Analytics & Logs › Web Analytics › Add a site* — that does
-**not** require moving DNS to Cloudflare — and paste it into `TOKEN` in the
-analytics block at the bottom of `index.html`'s `<head>`.
+**Landing-page visits — Cloudflare Web Analytics.** Live. Free, unlimited and
+cookieless, so no consent banner. The token sits in the analytics block at the
+bottom of `index.html`'s `<head>`; read the numbers at dash.cloudflare.com
+under *Analytics & Logs › Web Analytics*.
 
-Until a well-formed token is set the beacon is never injected and the page
-makes no external request at all, so the placeholder is safe to ship. A test
-asserts exactly that, and asserts a malformed token is ignored rather than
-sending junk.
+The figures are **private to that Cloudflare account**. Nothing is rendered on
+the page, no visitor sees a count, and the token in the page source only says
+where to *send* measurements — it grants nobody the ability to read them. Tests
+assert no count appears in the DOM and no cookie is set.
+
+The one thing a public token does allow is someone forging beacons to inflate
+your numbers. That is inherent to every client-side analytics tool, it needs
+deliberate effort, and the blast radius is a wrong number on your own
+dashboard. Treat the traffic figures as indicative, and Apple's install counts
+as authoritative.
+
+A blank or half-pasted token injects nothing rather than firing a broken
+request, which is what makes the placeholder safe to commit. Tested with empty,
+truncated and non-hex tokens.
 
 The block sits deliberately **after** the social redirect. A visitor on their
 way to `/go/` is leaving, so there is no reason to spend a request measuring
